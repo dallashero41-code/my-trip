@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orlando Expedition | Day 5</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #051F20;
+            --bg-swamp: #0B2B26;
+            --card-glass: rgba(18, 41, 35, 0.75);
+            --accent-fern: #4A7c59;
+            --accent-gold: #D4AF37; /* Firefly Gold */
+            --accent-water: #88B0C3;
+            --text-cream: #E8E6D9;
+            --text-muted: #A3B1A8;
+            --danger: #E07A5F;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg-deep);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(20, 60, 40, 0.4) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(100, 120, 50, 0.1) 0%, transparent 20%);
+            color: var(--text-cream);
+            line-height: 1.6;
+            padding-bottom: 80px;
+            min-height: 100vh;
+        }
+
+        /* Vine/Nature Decoration */
+        .vine-decor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent-fern), var(--accent-gold), var(--accent-fern));
+            z-index: 200;
+            box-shadow: 0 0 10px var(--accent-fern);
+        }
+
+        header {
+            background: rgba(5, 31, 32, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem 1.5rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            color: var(--accent-gold);
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            position: relative;
+        }
+
+        /* Swamp Timeline */
+        .container::before {
+            content: '';
+            position: absolute;
+            left: 2rem;
+            top: 2rem;
+            bottom: 2rem;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent-fern), var(--accent-gold), var(--bg-deep));
+            opacity: 0.4;
+        }
+
+        .event-card {
+            background-color: var(--card-glass);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2.5rem;
+            margin-left: 2rem;
+            position: relative;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(8px);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+
+        /* Firefly Dot */
+        .event-card::before {
+            content: '';
+            position: absolute;
+            left: -2.6rem;
+            top: 1.5rem;
+            width: 12px;
+            height: 12px;
+            background-color: var(--bg-deep);
+            border: 2px solid var(--accent-gold);
+            border-radius: 50%;
+            z-index: 10;
+            box-shadow: 0 0 8px var(--accent-gold);
+        }
+
+        .time-badge {
+            display: inline-block;
+            font-family: 'Cormorant Garamond', serif;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--accent-gold);
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .card-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: #fff;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .card-content {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 1.2rem;
+        }
+
+        .highlight {
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
+        .warning {
+            color: #FFADAD;
+            font-weight: 600;
+            display: block;
+            margin-top: 0.8rem;
+            font-size: 0.9rem;
+            background: rgba(224, 122, 95, 0.15);
+            padding: 0.8rem;
+            border-radius: 6px;
+            border-left: 3px solid var(--danger);
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+            background: rgba(0,0,0,0.3);
+            padding: 0.8rem;
+            border-radius: 6px;
+        }
+
+        input[type="checkbox"] {
+            accent-color: var(--accent-fern);
+            width: 1.2rem;
+            height: 1.2rem;
+        }
+
+        /* Nature Action Buttons */
+        .actions {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-cream);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-fern);
+            color: #fff;
+            border-color: var(--accent-fern);
+            box-shadow: 0 0 10px rgba(74, 124, 89, 0.4);
+        }
+
+        .btn-primary {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--accent-gold);
+            color: var(--bg-deep);
+        }
+
+        /* Icon styling */
+        .icon {
+            font-style: normal;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="vine-decor"></div>
+
+<header>
+    <h1>The Jungle Expedition</h1>
+    <div class="subtitle">2026.02.28 (Sat) • Orlando Day 5</div>
+</header>
+
+<div class="container">
+
+    <!-- 08:00 AM -->
+    <div class="event-card">
+        <div class="time-badge">08:00 - 09:15</div>
+        <div class="card-title">🚙 租車物流策略</div>
+        <div class="card-content">
+            <p><strong>駕駛出發：</strong>攜帶護照、駕照、信用卡，單獨搭 Uber 前往 SIXT Kissimmee。</p>
+            <p style="margin-top: 8px;"><strong>目的：</strong>避開週六早晨家庭退房的人潮與行李搬運的混亂。</p>
+            <span class="warning">⚠️ 關鍵動作：請務必向櫃檯確認車輛的 SunPass / Toll Pass (電子收費) 功能已開啟。今日全程需使用。</span>
+        </div>
+        <div class="actions">
+            <button class="btn btn-primary" onclick="copyText('SIXT Rent a Car, 7470 W Irlo Bronson Memorial Hwy, Kissimmee')">
+                📍 複製 SIXT 地址
+            </button>
+        </div>
+    </div>
+
+    <!-- 09:15 AM -->
+    <div class="event-card">
+        <div class="time-badge">09:15</div>
+        <div class="card-title">🏨 飯店接駁</div>
+        <div class="card-content">
+            駕駛開回 Art of Animation 大廳。<br>
+            同行者此時應已完成退房 (Check-out)，行李在大廳門口待命，車到即走。
+        </div>
+    </div>
+
+    <!-- 09:30 AM -->
+    <div class="event-card">
+        <div class="time-badge">09:30</div>
+        <div class="card-title">☕ 早餐補給 (Drive-Thru Style)</div>
+        <div class="card-content">
+            <strong>策略：</strong>外帶至車上食用，節省時間以利後續行程。<br><br>
+            <strong>選項 A (順路)：XO Coffee Shop</strong><br>
+            推薦：拿鐵、酪梨吐司、可頌。<br><br>
+            <strong>選項 B (起司球)：Mecatos Bakery & Café</strong><br>
+            推薦：Pan de Bono (哥倫比亞起司球) - 外皮酥脆內裡Q彈。
+        </div>
+        <div class="actions">
+            <button class="btn" onclick="copyText('4965 W Irlo Bronson Memorial Hwy, Kissimmee')">📍 XO Coffee</button>
+            <button class="btn" onclick="copyText('2900 S Kirkman Rd, Orlando')">📍 Mecatos</button>
+        </div>
+    </div>
+
+    <!-- 10:00 AM -->
+    <div class="event-card">
+        <div class="time-badge">10:00</div>
+        <div class="card-title">🛣️ 公路移動 (Turnpike North)</div>
+        <div class="card-content">
+            路線：沿 Florida's Turnpike 往北，接 I-75 公路。<br>
+            車程約 1 小時 45 分。
+        </div>
+    </div>
+
+    <!-- 11:45 AM -->
+    <div class="event-card">
+        <div class="time-badge">11:45</div>
+        <div class="card-title">🍖 午餐外帶：Big Lee's BBQ</div>
+        <div class="card-content">
+            Ocala 當地傳奇的燒烤店。<br><br>
+            <div class="checklist-item">
+                <span class="highlight">必點：</span> Brisket Sandwich (牛胸肉三明治)。
+            </div>
+            <p style="margin-top:10px;"><strong>攻略：</strong>他們的自製 BBQ 醬汁非常出色，記得索取。週六排隊人潮可能較多，建議副駕駛在抵達前 20 分鐘上官網查看是否開放 Online Ordering。</p>
+        </div>
+        <div class="actions">
+            <button class="btn btn-primary" onclick="copyText('2611 SW 19th Avenue Rd, Ocala')">📍 複製 Big Lee's BBQ</button>
+        </div>
+    </div>
+
+    <!-- 12:15 PM -->
+    <div class="event-card" style="border-color: var(--accent-water);">
+        <div class="time-badge" style="color: var(--bg-deep); background: var(--accent-water); border-color: var(--accent-water);">12:15 - 14:45</div>
+        <div class="card-title">🛶 Silver Springs 獨木舟探險</div>
+        <div class="card-content">
+            <p style="margin-bottom: 10px;"><strong>報到與租賃：</strong>前往 Paddling Adventures 櫃檯。建議預約 13:00 的船次（請提前 30 分鐘報到）。</p>
+            
+            <p><strong>生態觀察重點：</strong></p>
+            <ul style="padding-left: 20px; color: var(--text-muted);">
+                <li><strong>海牛 (Manatees)：</strong>運氣好能在較淺溫暖水域看到。規則：只能看不能摸。</li>
+                <li><strong>野生猴子 (Rhesus Macaques)：</strong>留意岸邊樹叢，全美唯一野生恆河猴群。規則：禁止餵食。</li>
+                <li><strong>鱷魚 (Alligators)：</strong>通常在岸邊曬太陽，保持冷靜通過即可。</li>
+            </ul>
+        </div>
+        <div class="actions">
+            <button class="btn btn-primary" onclick="copyText('5656 E Silver Springs Blvd, Silver Springs')">📍 複製公園地址</button>
+        </div>
+    </div>
+
+    <!-- 14:45 PM -->
+    <div class="event-card">
+        <div class="time-badge">14:45</div>
+        <div class="card-title">🚗 移動至 Winter Park</div>
+        <div class="card-content">
+            <span class="warning">⚠️ 關鍵死線：14:45 是離開的最後期限。若晚於此時間，將無法趕上 Rifle Paper Co. 的打烊時間 (17:00)。</span>
+        </div>
+    </div>
+
+    <!-- 16:30 PM -->
+    <div class="event-card">
+        <div class="time-badge">16:30</div>
+        <div class="card-title">🛍️ Winter Park 質感漫遊</div>
+        <div class="card-content">
+            建議停放於 Park Place Garage (位置最方便)。<br><br>
+            <div class="checklist-item">
+                <input type="checkbox" id="shop1">
+                <label for="shop1" style="margin-left: 10px;"><strong>Rifle Paper Co.</strong> (17:00 關門) - 優先！全球唯一旗艦店。</label>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" id="shop2">
+                <label for="shop2" style="margin-left: 10px;"><strong>Frank</strong> (18:00 關門) - 高端設計選物。</label>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" id="shop3">
+                <label for="shop3" style="margin-left: 10px;"><strong>Rocket Fizz</strong> (深夜) - 美式復古糖果與玩具。</label>
+            </div>
+        </div>
+        <div class="actions">
+            <button class="btn" onclick="copyText('Park Place Garage, Winter Park')">📍 複製停車場</button>
+        </div>
+    </div>
+
+    <!-- 18:00 PM -->
+    <div class="event-card">
+        <div class="time-badge">18:00</div>
+        <div class="card-title">🏭 Foxtail Coffee 旗艦店</div>
+        <div class="card-content">
+            <strong>Flagship Store (Social House)</strong><br>
+            舊倉庫改建，店內有一台巨大的 Giesen 烘豆機。<br>
+            <span class="highlight">推薦：</span> Cold Brew (冷萃) 或 Nitro Cold Brew (氮氣冷萃)。
+        </div>
+        <div class="actions">
+            <button class="btn btn-primary" onclick="copyText('1282 N Orange Ave, Winter Park')">📍 複製 Foxtail 地址</button>
+        </div>
+    </div>
+
+    <!-- 19:00 PM -->
+    <div class="event-card" style="border-color: #E07A5F;">
+        <div class="time-badge" style="color: #fff; background: #E07A5F; border-color: #E07A5F;">19:00 - 20:30</div>
+        <div class="card-title">🥩 晚餐：Adega Gaucha (巴西烤肉)</div>
+        <div class="card-content">
+            <strong>選擇理由：</strong>奧蘭多本地評價最高的巴西牛排館。餐廳位於 Airbnb 區域，吃完即可迅速返家。<br><br>
+            <strong>用餐攻略：</strong>
+            <ul style="padding-left: 20px; color: var(--text-muted); margin-top: 5px;">
+                <li><strong>Gourmet Table：</strong>非常豐盛，有棕櫚心、燻鮭魚。</li>
+                <li><strong>必吃肉品：</strong>Picanha (Top Sirloin)，油脂與瘦肉比例最完美。</li>
+                <li><strong>配菜：</strong>起司麵包和炸香蕉無限供應。</li>
+            </ul>
+        </div>
+        <div class="actions">
+            <button class="btn btn-primary" onclick="copyText('8204 Crystal Clear Ln, Orlando')">📍 複製 Adega Gaucha</button>
+        </div>
+    </div>
+
+    <!-- 21:00 PM -->
+    <div class="event-card">
+        <div class="time-badge">21:00</div>
+        <div class="card-title">🏠 抵達 Airbnb</div>
+        <div class="card-content">
+            Sky Lake / Florida Mall 商圈。<br>
+            生活機能方便。
+        </div>
+        <div class="actions">
+            <button class="btn" onclick="copyText('7637-7601 Boice St, Orlando, FL 32809')">📍 複製 Airbnb 地址</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function copyText(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert('已複製地址至剪貼簿：\n' + text);
+        }).catch(err => {
+            console.error('複製失敗', err);
+        });
+    }
+</script>
+
+</body>
+</html>

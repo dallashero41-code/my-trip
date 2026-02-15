@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>THE INSIGHT NY: V27 Final Ultimate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ny-brick: #8B2E2E;
+            --ny-green: #2F5A41;
+            --ny-steel: #334155;
+            --ny-ice: #0EA5E9;
+        }
+
+        body { 
+            font-family: 'Lato', sans-serif; 
+            background-color: #F8FAFC; 
+            color: #334155;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        h1, h2, h3, .serif { font-family: 'Playfair Display', serif; }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Hero Header */
+        .hero-header {
+            height: 60vh;
+            min-height: 450px;
+            background-image: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?q=80&w=1200&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding-bottom: 4rem;
+        }
+
+        /* Sticky Nav */
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #cbd5e1;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Sticker Header */
+        .sticker-header {
+            position: relative;
+            width: 100%;
+            height: 160px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        .sticker-bg-icon {
+            position: absolute;
+            font-size: 10rem;
+            opacity: 0.15;
+            transform: rotate(-15deg) scale(1.5);
+            pointer-events: none;
+        }
+
+        .sticker-main-icon {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+            z-index: 10;
+        }
+
+        /* Gradients */
+        .bg-gradient-spot { background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%); }
+        .bg-gradient-food { background: linear-gradient(135deg, #F43F5E 0%, #FEC163 100%); }
+        .bg-gradient-shop { background: linear-gradient(135deg, #0EA5E9 0%, #2DD4BF 100%); }
+        .bg-gradient-coffee { background: linear-gradient(135deg, #8B5CF6 0%, #D946EF 100%); }
+        .bg-gradient-transport { background: linear-gradient(135deg, #64748B 0%, #94A3B8 100%); }
+
+        .ny-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            margin-bottom: 3rem;
+        }
+
+        /* Content Blocks */
+        .guide-text {
+            line-height: 1.8;
+            font-size: 0.95rem;
+            color: #475569;
+            margin-bottom: 1rem;
+            white-space: pre-line;
+        }
+        .guide-text b { color: #1E293B; font-weight: 800; }
+
+        .history-box {
+            background-color: #FDF4FF;
+            border-left: 4px solid #D946EF;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.25rem;
+            color: #701A75;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        .history-title {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.3rem;
+            font-size: 0.75rem;
+            color: #A21CAF;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .history-box b { color: #86198F; }
+
+        .winter-box {
+            background-color: #F0F9FF;
+            border: 1px solid #BAE6FD;
+            color: #0369A1;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.75rem;
+            align-items: start;
+            font-size: 0.95rem;
+            box-shadow: 0 2px 4px rgba(14, 165, 233, 0.1);
+        }
+        .winter-box b { color: #0C4A6E; font-weight: 800; }
+
+        .warning-box {
+            background-color: #FEF2F2;
+            border: 1px solid #FECACA;
+            color: #991B1B;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.75rem;
+            align-items: start;
+        }
+        .warning-box b { color: #7F1D1D; }
+
+        .tips-box {
+            background-color: #FFFBEB;
+            border: 1px solid #FDE68A;
+            color: #92400E;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .tips-box b { color: #78350F; }
+
+        .must-order {
+            background-color: #F0FDF4;
+            border: 1px dashed #22c55e;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .must-order-item {
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            color: #334155;
+        }
+        .must-order-item:last-child { margin-bottom: 0; }
+        .must-order b { color: #14532D; font-weight: 800; }
+
+        .price-tag {
+            background-color: #ECFCCB;
+            color: #3F6212;
+            padding: 0.1rem 0.4rem;
+            border-radius: 0.3rem;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-left: 0.3rem;
+        }
+
+        .map-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            background-color: rgba(255,255,255,0.25);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 0.35rem 0.85rem;
+            border-radius: 9999px;
+            backdrop-filter: blur(4px);
+            transition: all 0.2s;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        .map-btn:hover { background-color: rgba(255,255,255,0.4); }
+
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="pb-24">
+
+    <!-- Hero Header -->
+    <header class="hero-header">
+        <div class="serif text-5xl md:text-7xl font-bold tracking-widest mb-3 drop-shadow-lg text-shadow">THE INSIGHT NY</div>
+        <div class="text-sm md:text-base font-light tracking-[0.3em] uppercase opacity-90 mb-6 drop-shadow-md">Winter Edition V27</div>
+        <div class="bg-white/10 backdrop-blur-md px-6 py-2 rounded-full border border-white/30 text-xs font-bold tracking-wider uppercase shadow-lg">
+            Feb 19 - Feb 23
+        </div>
+    </header>
+
+    <!-- Sticky Nav -->
+    <div class="sticky-nav">
+        <div class="flex overflow-x-auto no-scrollbar py-4 px-4 gap-3 justify-start md:justify-center" id="day-nav">
+            <!-- JS 生成 -->
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-3xl mx-auto px-4 pt-8" id="main-content">
+        <!-- JS 生成 -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-12 text-gray-400 text-xs bg-slate-50 border-t border-gray-200 mt-12">
+        <p class="mb-2 font-bold text-slate-600 text-sm">Hotel Indigo NYC - Financial District</p>
+        <p>Stay Warm • Eat Well • Explore Deep</p>
+    </footer>
+
+    <script>
+        // --- V27 ULTIMATE DATA (VERBATIM TEXT + WINTER + HISTORY) ---
+        const tripData = [
+            {
+                day: 1,
+                date: "2/19 (Wed)",
+                theme: "摩登起源",
+                subTheme: "Origins & Modernity",
+                locations: [
+                    {
+                        time: "08:30",
+                        title: "Black Fox Coffee Co.",
+                        query: "Black Fox Coffee Co Pine St",
+                        type: "coffee",
+                        icon: "fa-mug-hot",
+                        tags: ["FiDi", "Coffee"],
+                        meta: "07:00 - 16:30",
+                        winter: "🔥 <b>暖身重點</b>：金融區大樓間風很大 (Wind Tunnel)。這裡是你離開飯店後的第一個熱源補給站，建議在店內喝完再走，讓身體徹底暖和。",
+                        editor: "不同於紐約傳統咖啡館的深沉擁擠，這裡展現了現代澳洲咖啡文化的明亮與通透。店內採用溫暖的胡桃木與幾何磁磚設計，是金融區難得的綠洲。他們採用獨特的「多烘豆師 (Multi-Roaster)」模式，這意味著你喝到的不是單一品牌的豆子，而是咖啡師從全球頂尖烘豆廠（如 49th Parallel, Heart）精選出的當季最佳風味。",
+                        must: [
+                            "<b>Flat White</b> <span class='price-tag'>$5.75</span>：這裡的奶泡打得極薄且綿密 (Micro-foam)，入口如絲綢般滑順，完美襯托出濃縮咖啡的堅果與巧克力尾韻，沒有一絲焦苦味。",
+                            "<b>Iced Oat Latte</b> <span class='price-tag'>$7.50</span>：紐約客的標配。選用 Oatly 燕麥奶，其穀物甜味與中淺焙的豆子融合度極佳，清爽醒腦。",
+                            "<b>Maple Pecan Scone</b> <span class='price-tag'>$6.50</span>：紐約時報食評曾推薦過。外層酥脆，內心濕潤，加熱後楓糖的香氣會隨著熱氣散發出來，是黑咖啡的絕配。"
+                        ]
+                    },
+                    {
+                        time: "09:15",
+                        title: "Wall St & Charging Bull",
+                        query: "Charging Bull New York",
+                        type: "spot",
+                        icon: "fa-bullhorn",
+                        tags: ["Landmark"],
+                        winter: "❄️ <b>速戰速決</b>：銅牛是金屬製的，摸起來像冰塊一樣凍手。建議戴著手套拍照，或者摸完立刻插回口袋保暖。這一區大樓陰影多，體感溫度低，拍完照請迅速移動。",
+                        history: "<b>真正的「牆 (Wall)」</b>：Wall Street 之所以叫 Wall Street，是因為 1653 年荷蘭殖民者為了抵禦英軍和原住民，在這裡築起了一道 12 英尺高的木牆。雖然牆早已拆除，但這裡始終是保護（或控制）財富的堡壘。",
+                        editor: "【景點攻略】\n<b>Charging Bull (銅牛)</b>：市場樂觀的象徵。傳說摸「牛蛋」能帶來財運。09:30 前是唯一能拍到空景的黃金窗口，之後就會被旅遊團淹沒。\n\n<b>Fearless Girl (無畏女孩)</b>：昂首面對紐約證交所 (NYSE)，象徵女性在男性主導的金融世界中的無畏精神。\n\n<b>Wall Street (木牆遺跡)</b>：留意腳下的深色石板路標示，這裡曾經是 1653 年荷蘭殖民者為了抵禦英軍而築起的一道木牆 (Wall)，也是這條街名的由來。"
+                    },
+                    {
+                        time: "10:30",
+                        title: "Oculus & 9/11 Memorial",
+                        query: "The Oculus New York",
+                        type: "spot",
+                        icon: "fa-feather-alt",
+                        tags: ["Architecture"],
+                        winter: "🔥 <b>重要回血點</b>：Oculus 車站內部非常溫暖且明亮，是絕佳的「解凍區」。參觀完戶外的 9/11 歸零地（風很大）後，請立刻躲進 Oculus 內部回溫，順便上個廁所。",
+                        editor: "【景點攻略】\n<b>Oculus (飛鳥車站)</b>：建築師 Santiago Calatrava 的傑作。外觀像一隻從孩子手中放飛的白鴿。必看細節：走進內部，抬頭看那根「脊椎」般的白色鋼骨結構，陽光從肋骨般的縫隙灑落，你會感覺置身於一隻巨大的白鯨體內，既神聖又超現實。\n\n<b>9/11 Memorial (歸零地)</b>：北美最大的人造瀑布「Reflecting Absence」。站在邊緣，看著水流不斷向中心深淵匯聚，卻永遠填不滿那個黑洞，那是一種無聲卻巨大的震撼。"
+                    },
+                    {
+                        time: "12:30",
+                        title: "Katz's Delicatessen",
+                        query: "Katz's Delicatessen",
+                        type: "food",
+                        icon: "fa-sandwich",
+                        tags: ["Legend", "Lunch"],
+                        meta: "08:00 - 22:45 (不接受預約)",
+                        editor: "1888 年開業至今，它是紐約猶太熟食店 (Deli) 的活化石，也是電影《當哈利遇上莎莉》的高潮場景。堅持長達 30 天的牛肉醃製與燻烤工藝。",
+                        warning: "<b>黃票警告 (The Ticket Rule)</b>：進門時保全會發一張黃色小票，這是你的消費紀錄卡。絕對不能丟！即使沒吃東西，出門也要繳回，遺失罰款 $50。",
+                        tips: "<b>老饕潛規則</b>：走到切肉台前，在師傅的小費杯放 $1-$2 美金。切肉師傅會心領神會，切幾片剛出爐、肥瘦相間的熱 Pastrami 給你「試吃」。那一口熱肉，往往是整餐的精華。",
+                        must: [
+                            "<b>Pastrami on Rye</b> <span class='price-tag'>$28.95</span>：經典之最。堆疊得像小山一樣的煙燻牛肉。強烈建議跟師傅說要 \"Juicy\" (肥瘦相間) 的部位，脂肪在口中化開的感覺遠勝全瘦肉。",
+                            "<b>Matzo Ball Soup</b> <span class='price-tag'>$9.95</span>：猶太丸子湯，巨大的未發酵麵包丸子吸滿了清雞湯，是傳統猶太家庭的「療癒食物」。",
+                            "<b>Full Sour Pickles</b> (免費)：點餐即送。那種直衝腦門的酸爽，是用來平衡大量肉類油脂的關鍵。"
+                        ]
+                    },
+                    {
+                        time: "13:30",
+                        title: "Luke's Lobster (FiDi)",
+                        query: "Luke's Lobster FiDi",
+                        type: "food",
+                        icon: "fa-fish",
+                        tags: ["Seafood"],
+                        history: "<b>漁夫的堅持</b>：創辦人 Luke Holden 放棄了華爾街的高薪工作，只為了把家鄉緬因州最純粹的味道帶回紐約。這裡沒有花俏的擺盤，只有對「永續漁法」的堅持。每一口龍蝦肉，都能追溯到是哪艘漁船在哪個港口捕撈的，這是快節奏紐約中難得的樸實。",
+                        editor: "源自緬因州的永續海鮮品牌。這裡的龍蝦堡強調「減法哲學」：沒有過多的美乃滋或配料，只有微量的檸檬奶油、些許香料粉，以及滿滿的、冰涼鮮甜的龍蝦肉。麵包使用塗了奶油煎至金黃的吐司，冷熱交替的口感非常迷人。",
+                        must: [
+                            "<b>Lobster Roll (4oz)</b> <span class='price-tag'>$24.00</span>",
+                            "<b>Luke's Trio</b> (海鮮三重奏)"
+                        ]
+                    },
+                    {
+                        time: "14:00",
+                        title: "SoHo 鑄鐵叢林",
+                        query: "SoHo New York",
+                        type: "shop",
+                        icon: "fa-shopping-bag",
+                        tags: ["Shopping"],
+                        winter: "❄️ <b>洋蔥式穿脫</b>：SoHo 逛街是典型的「忽冷忽熱」。店內暖氣極強，街上風大。建議外套裡面穿好穿脫的衣物，不要穿太厚的高領毛衣，否則試穿衣服或在店內會熱到流汗，出門一吹風就感冒。",
+                        history: "<b>藝術拯救了工業區</b>：70 年代，這些巨大的鑄鐵工廠幾乎被廢棄。是窮困的藝術家們發現這裡挑高、採光好的「Loft」空間適合創作，非法入住並慢慢改造了這裡。如今，SoHo 是「仕紳化 (Gentrification)」最經典的案例，從廢墟變成了全球最昂貴的零售區。",
+                        editor: "這裡有全世界保存最完整的鑄鐵建築群 (Cast-Iron Architecture)。抬頭看那些精緻的窗框和防火梯，它們不是石頭，而是工業時代的鐵鑄藝術。這裡也是 1970 年代藝術家非法佔據工廠閣樓 (Loft) 的發源地，空氣中至今仍瀰漫著時尚與藝術的氣息。",
+                        listItems: [
+                            { name: "fwee Agit (Tiffany)", desc: "韓國爆紅彩妝 fwee 的快閃體驗店。店內設計像是實驗室，可以試玩他們著名的「唇泥」(Pudding Pot)，觸感軟糯，顏色選擇極多。任務：登記領取鑰匙圈。" },
+                            { name: "Ana Luisa Jewelry (Tiffany)", desc: "主打碳中和與低敏材質的極簡金飾。設計風格內斂優雅，非常適合日常佩戴，且價格親民，是近年紐約小資女的最愛。" },
+                            { name: "Glossier NYC (Tiffany)", desc: "旗艦店設計得像是一個粉紅色的超現實地鐵站。這裡強調「沉浸式體驗」，店員穿著連身工作服。必買 Boy Brow (眉膠) 與 Cloud Paint (腮紅液)。" },
+                            { name: "OAK + FORT (Tiffany)", desc: "來自加拿大的極簡品牌。以高級灰、燕麥色為主調，剪裁俐落的大衣與針織衫質感極佳，非常適合 Tiffany 的氣質。" },
+                            { name: "Nike SoHo (共同)", desc: "5 層樓高的超級旗艦店。擁有 Nike By You 深度客製化服務，可以製作印有 \"NYC\" 標誌的專屬鞋款。" },
+                            { name: "Mitchell & Ness (Andy)", desc: "復古球衣的麥加。這裡收藏有當年 Jordan、Iverson 的球員版球衣 (Authentic Jersey)，質感厚實，與一般球迷版完全不同，是籃球愛好者的聖殿。" },
+                            { name: "Morgenstern's Finest Ice Cream (休息)", desc: "紐約新派冰淇淋代表。必點 Burnt Honey Vanilla (焦糖蜂蜜香草)，那種帶有微苦焦糖味的香草非常大人味；或 Raw Milk (生乳)，純粹的乳香爆擊。" }
+                        ]
+                    },
+                    {
+                        time: "19:00",
+                        title: "Saigon Shack",
+                        query: "Saigon Shack",
+                        type: "food",
+                        icon: "fa-bowl-rice",
+                        tags: ["Dinner"],
+                        editor: "位於格林威治村 (Greenwich Village)，就在 NYU 校園旁。這是一家充滿活力的越南餐館，被譽為 NYU 學生的食堂。店內裝潢簡單，總是播放著熱鬧的音樂。這裡的食物份量大、價格實惠，是撫慰亞洲胃的最佳選擇。",
+                        must: [
+                            "<b>S.S. Classic Pho</b> <span class='price-tag'>$15.00</span>：招牌河粉。湯頭經過長時間熬煮，牛骨味濃郁，牛肉片給得毫不手軟，半生熟的狀態入口最嫩。",
+                            "<b>Classic Banh Mi</b> <span class='price-tag'>$11.00</span>：越式法包。麵包體烤得極度酥脆，咬下去會掉渣，內餡的肝醬、醃蘿蔔與烤肉比例完美。"
+                        ]
+                    },
+                    {
+                        time: "20:30",
+                        title: "One World Observatory",
+                        query: "One World Observatory",
+                        type: "spot",
+                        icon: "fa-building",
+                        tags: ["View"],
+                        history: "<b>韌性的高度</b>：這座大樓不僅是西半球最高樓，更是紐約韌性的象徵。它建立在 9/11 的悲劇旁，不叫「重建」，而叫「重生」。當你站在 102 樓俯瞰全城時，看到的不只是風景，更是這座城市在經歷毀滅性打擊後，依然昂首挺立的證明。",
+                        winter: "🔥 <b>最棒的室內夜景</b>：相比帝國大廈或 Top of the Rock 的露天觀景台（冬天風大到頭痛），One World 是全室內空調環境。您可以優雅地穿著薄衣服，拿著 Prosecco 享受夜景，不用擔心被風吹成冰棒。",
+                        editor: "搭乘 47 秒直達 102 樓的 SkyPod 電梯，電梯四壁的 LED 螢幕會播放紐約從 1600 年沼澤地變成摩天大樓叢林的縮時影片，非常震撼。",
+                        tips: "🎫 票務備註：推薦購買 Combination Ticket。含優先通關 + $15 飲料抵用券。\nOne Mix Bar: 上去後直接前往酒吧兌換 Prosecco 或調酒，坐在窗邊看著曼哈頓下城的車河與布魯克林大橋的燈光。"
+                    }
+                ]
+            },
+            {
+                day: 2,
+                date: "2/20 (Thu)",
+                theme: "布魯克林",
+                subTheme: "Brooklyn Soul",
+                locations: [
+                    {
+                        time: "08:00",
+                        title: "787 Coffee + Leo's Bagels",
+                        query: "787 Coffee Financial District",
+                        type: "coffee",
+                        icon: "fa-mug-hot",
+                        tags: ["Breakfast"],
+                        editor: "<b>787 Coffee</b>: 來自波多黎各的精品咖啡，強調 \"From Farm to Cup\"。必點 Coquito Latte，這是一種加入椰奶與肉桂的特調，帶有加勒比海的熱帶風味，卻不含酒精。\n\n<b>Leo's Bagels</b>: 金融區首選貝果。堅持手工捲製 (Hand-rolled) 與水煮烘烤。貝果體紮實有嚼勁，Everything Bagel 加上厚厚的 Scallion Cream Cheese (蔥味乳酪) 是最道地的紐約吃法。"
+                    },
+                    {
+                        time: "08:30",
+                        title: "Staten Island Ferry",
+                        query: "Staten Island Ferry Whitehall Terminal",
+                        type: "spot",
+                        icon: "fa-ship",
+                        tags: ["Free", "Iconic"],
+                        history: "<b>自由的燈塔</b>：當渡輪駛過港口，請想像 19 世紀末的歐洲移民，他們在船上擠著，第一眼看到的也是這尊自由女神。那是希望的象徵，代表著「我終於到了」。這艘橘色渡輪雖是通勤工具，卻也是紐約最民主的觀景台——無論貧富，每個人都能平等地在甲板上仰望自由。",
+                        winter: "❄️ <b>甲板戰術</b>：海風極大且刺骨！建議大部分時間待在溫暖的船艙內（靠窗），等船接近自由女神像時（約航程中間點），再衝出去甲板拍 3-5 分鐘，拍完迅速撤回室內。帽子一定要戴緊，會被吹飛。",
+                        tips: "★ 觀賞重點：去程請務必站在船身右側 (Starboard)，這是拍攝自由女神的最佳角度；回程站在船身左側 (Port)。"
+                    },
+                    {
+                        time: "10:30",
+                        title: "Little Island & High Line",
+                        query: "Little Island NYC",
+                        type: "spot",
+                        icon: "fa-leaf",
+                        tags: ["Park"],
+                        winter: "⚠️ <b>無處可躲</b>：High Line 是架空的，哈德遜河的風會直接灌進來。如果當天風太大，建議「走一半」就好（從 Chelsea Market 附近的樓梯下來），不要硬走完全程。",
+                        editor: "<b>Little Island (小島)</b>：建立在哈德遜河舊碼頭木樁上的漂浮公園，造型像是一朵朵浮出水面的鬱金香。去西南角的最高觀景台，可以拍到「水泥花瓣+曼哈頓天際線」的合影。\n\n<b>High Line (高架公園)</b>：由廢棄的高架貨運鐵道改建。沿途植栽皆為原生種，你將穿梭在 Zaha Hadid 等大師設計的現代建築群之中，是建築迷與攝影愛好者的必修課。"
+                    },
+                    {
+                        time: "11:30",
+                        title: "Chelsea Market",
+                        query: "Chelsea Market",
+                        type: "food",
+                        icon: "fa-utensils",
+                        tags: ["Food"],
+                        history: "<b>餅乾帝國的重生</b>：這座佔據整街區的紅磚巨獸，曾是美國國家餅乾公司 (Nabisco) 的總部。1912 年，第一塊 Oreo 餅乾就是在這棟建築裡誕生的。如今，麵粉與奶油的香氣依然存在，但已轉化為龍蝦、香料與義式冰淇淋的交響樂，完美演繹了紐約工業遺產的活化。",
+                        winter: "🔥 <b>解凍聖地</b>：High Line 走冷了，立刻鑽進這裡。這裡暖氣充足，還有熱湯麵 (Very Fresh Noodles)。",
+                        warning: "⚠️ 戰略提醒：因為 14:30 要吃巨無霸牛排，這裡嚴禁吃飽。",
+                        must: [
+                            "<b>Los Tacos No. 1</b>：紐約公認第一名的 Tacos。即使排隊也很快。必點 Adobada (醃豬肉) Taco，豬肉在旋轉烤肉架上烤得焦香，師傅會俐落地削下肉片，搭配一片新鮮鳳梨，酸甜解膩，餅皮充滿玉米香。",
+                            "<b>Very Fresh Noodles (非常鮮)</b>：位於市場深處，你可以透過玻璃窗看到師傅現場甩打麵條。推薦 Tingly Cumin Lamb (孜然羊肉 Biang Biang 麵)，麵條寬厚Q彈，吸滿了帶有「麻」感的辣油與孜然香氣，重口味愛好者首選。",
+                            "<b>L'Arte del Gelato</b>：位於市場轉角，被認為是紐約前三名的義式冰淇淋。推薦 Pistachio (開心果)，色澤自然暗沉（非色素綠），入口是濃郁的堅果油脂香；或 Stracciatella (牛奶巧克力脆片)。"
+                        ]
+                    },
+                    {
+                        time: "14:30",
+                        title: "Peter Luger Steak House",
+                        query: "Peter Luger Steak House",
+                        type: "food",
+                        icon: "fa-drumstick-bite",
+                        tags: ["Steak", "Legend"],
+                        editor: "自 1887 年開業，曾連續 30 年被 Zagat 評為紐約第一牛排館。這裡有一種老派的固執：沒有音樂、燈光明亮、木頭地板被踩得嘎吱作響。侍者清一色穿著白圍裙、打領結，服務風格是著名的「傲嬌與直接」。",
+                        warning: "⚠️ 絕對規則：CASH ONLY (只收現金)。請務必帶足 $300-$400 美金。",
+                        must: [
+                            "<b>Steak for Two</b>：招牌乾式熟成紅屋牛排。上桌時瓷盤溫度極高，牛油在盤底滋滋作響。侍者會熟練地用湯匙舀起盤底的精華熱油，淋在肉塊上，那個聲音與香氣是整餐的高潮。",
+                            "<b>Luger's Sizzling Bacon</b>：這不是普通的培根，而是厚切如豬排的五花肉，外表烤得焦脆，內部軟嫩多汁。",
+                            "<b>Creamed Spinach</b>：奶油菠菜，口感滑順，是用來中和大量肉類油脂的神器。"
+                        ]
+                    },
+                    {
+                        time: "16:00",
+                        title: "威廉斯堡潮流散策",
+                        query: "Williamsburg Brooklyn",
+                        type: "shop",
+                        icon: "fa-tshirt",
+                        tags: ["Shopping"],
+                        history: "<b>從糖廠到文青聖地</b>：威廉斯堡以前是巨大的多米諾糖廠 (Domino Sugar) 所在地，充滿勞工與煙囪。90 年代後，隨著房租上漲，藝術家從曼哈頓外溢至此。現在這裡是紐約最「潮 (Hipster)」的地方，充滿古著店、精釀啤酒與單車客。",
+                        listItems: [
+                            { name: "Devoción (咖啡)", desc: "這是全紐約「最新鮮」的哥倫比亞咖啡。他們標榜豆子從哥倫比亞產地採摘到布魯克林烘焙，全程控制在 10 天內。店內有巨大的採光天窗與植生牆，氛圍極佳。" },
+                            { name: "Nike Williamsburg", desc: "不同於曼哈頓的商業化旗艦店，這間店更強調「社區連結」。選品更偏向滑板與街頭風格，店內裝潢也充滿了布魯克林的粗獷感。" },
+                            { name: "Le Labo", desc: "香水實驗室。威廉斯堡分店保留了原本建築的工業廢墟風格，斑駁的牆面配上整齊排列的燒杯與試劑瓶，非常有味道。可以在此印製印有你們名字的專屬標籤。" }
+                        ]
+                    },
+                    {
+                        time: "17:50",
+                        title: "DUMBO 雙魚巡禮 & 咖啡",
+                        query: "Dumbo Brooklyn",
+                        type: "spot",
+                        icon: "fa-camera",
+                        tags: ["Photo"],
+                        editor: "全名是 Down Under the Manhattan Bridge Overpass。這裡曾經是製造紙箱與肥皂的倉庫區，現在是布魯克林房價最高的紅磚森林。走在這裡，你會不時聽到頭頂上曼哈頓大橋地鐵轟隆經過的聲音，那是紐約的心跳聲。",
+                        winter: "🔥 <b>% Arabica 取暖</b>：這家咖啡店是 DUMBO 最佳避風港。在等待日落的空檔，請在店內喝杯熱拿鐵，透過大玻璃窗看大橋，不要一直待在河邊吹風。",
+                        listItems: [
+                            { name: "Fishs Eddy (DUMBO 新店)", desc: "原本只在曼哈頓的餐具名店。設計充滿美式幽默與紐約元素。必買 NY Skyline Mug (天際線馬克杯) 或 Bridge & Tunnel 系列，是極佳的紀念品。" },
+                            { name: "The Powerhouse Arena", desc: "位於 Archway 橋墩下的知名獨立書店與藝廊。挑高的劇場式空間非常有氣勢，常有藝術展覽。這裡選書品味極佳，特別是關於紐約攝影、設計與藝術的書籍。" },
+                            { name: "% Arabica", desc: "位於 20 Old Fulton St。這家店最迷人的是它的位置——透過巨大的拱形窗戶，布魯克林大橋的橋墩就在眼前。在這裡點一杯西班牙拿鐵 (Spanish Latte)，是欣賞日落前的最佳休息站。" }
+                        ]
+                    },
+                    {
+                        time: "18:40",
+                        title: "魔幻時刻：大橋日落",
+                        query: "Pebble Beach Dumbo",
+                        type: "spot",
+                        icon: "fa-sun",
+                        tags: ["View"],
+                        history: "<b>一位女性的堅持</b>：布魯克林大橋不僅是工程奇蹟，也是女性力量的象徵。總工程師 John Roebling 意外過世，其子 Washington 接手後也因病癱瘓。最後是他的妻子艾米莉·羅布林 (Emily Roebling) 自學高等數學與工程，指揮現場長達 11 年，才讓這座連接曼哈頓與布魯克林的鋼鐵巨獸完工。",
+                        winter: "❄️ <b>步行警告</b>：這段時間橋上會非常凍。如果當晚體感溫度太低，建議在 DUMBO 拍完照後，**放棄步行橫越**，直接搭 Uber 或地鐵回曼哈頓。如果堅持要走，請把圍巾包住口鼻，避免吸入冷空氣。",
+                        tips: "【體驗攻略】 走到 Pebble Beach (鵝卵石海灘)。這裡可以拍到旋轉木馬 (Jane’s Carousel)、布魯克林大橋與曼哈頓摩天大樓同時入鏡的畫面。看著夕陽灑在石造橋墩上，曼哈頓的燈光一盞盞亮起。最後，步行橫越布魯克林大橋 回到曼哈頓，感受海風與城市天際線的包圍。"
+                    }
+                ]
+            },
+            {
+                day: 3,
+                date: "2/21 (Fri)",
+                theme: "收藏家",
+                subTheme: "The Collector",
+                locations: [
+                    {
+                        time: "08:30",
+                        title: "Tompkins Square Bagels",
+                        query: "Tompkins Square Bagels Union Square",
+                        type: "food",
+                        icon: "fa-bread-slice",
+                        tags: ["Breakfast"],
+                        editor: "這是許多在地紐約客心中真正的 No.1 貝果店，強過觀光客大排長龍的 Ess-a-Bagel。他們強調 \"Hand-rolled\" (手工搓揉) 與 \"Kettle-boiled\" (先水煮過再烤)，造就了外皮脆硬、內部Q彈的完美口感。",
+                        must: ["必點：Everything Bagel。抹醬推薦招牌的 <b>Birthday Cake Cream Cheese</b> (帶有蛋糕甜香) 或經典的 <b>Lox & Scallion</b> (燻鮭魚蔥味)。"]
+                    },
+                    {
+                        time: "09:30",
+                        title: "中央公園野餐 (冬季版)",
+                        query: "Umpire Rock Central Park",
+                        type: "spot",
+                        icon: "fa-tree",
+                        tags: ["Nature"],
+                        history: "<b>人造的奇蹟</b>：中央公園並非天然森林，而是一場浩大的景觀工程。設計師 Olmsted 堅持這裡是「城市的肺」，並且是為了所有階級的人民而建。您所在的 Umpire Rock 是少數裸露的天然「曼哈頓片岩」，這些擁有 4.5 億年歷史的岩石，正是支撐起曼哈頓摩天大樓地基的關鍵。",
+                        winter: "❄️ <b>現實檢查</b>：2 月的石頭像冰塊，坐在上面野餐屁股會結凍。<b>替代方案</b>：買好貝果後，在公園入口站著吃，或走到 Umpire Rock 拍張「手拿貝果與巨石」的合照就撤退，去附近的商場（如 Columbus Circle 地下室）溫暖地吃早餐。",
+                        editor: "【野餐戰略】 帶著剛剛買的熱騰騰貝果，搭車前往中央公園。走進公園南側，爬上 Umpire Rock 這塊巨大的黑色片岩。\n\n【體驗】 坐在巨石上野餐。你的背景是被稱為「億萬富豪大道」的超細摩天大樓群，前景是數億年前的原始岩石與綠樹。這展現了紐約最強烈的「自然 vs 人造」時空對比。\n\n【中途順遊】 前往博物館的路上，會經過 Strawberry Fields (草莓園)，那是紀念約翰藍儂的地方，地上的 \"IMAGINE\" 馬賽克磚總是擺滿鮮花；以及旁邊的 The Dakota (達科他公寓)，紐約最傳奇的豪宅之一。"
+                    },
+                    {
+                        time: "11:00",
+                        title: "AMNH 自然史博物館",
+                        query: "American Museum of Natural History",
+                        type: "spot",
+                        icon: "fa-dragon",
+                        tags: ["Museum"],
+                        history: "<b>總統的後花園</b>：這座博物館與老羅斯福 (Theodore Roosevelt) 總統淵源極深。他的父親是創始人之一，而老羅斯福本人更是狂熱的自然學家。博物館的使命不僅是展示，更是探索未知。這裡也是電影《博物館驚魂夜》的真實舞台。",
+                        winter: "🔥 <b>優質室內行程</b>：這裡是完美的避寒點。如果外面太冷，可以多花點時間在這裡慢慢逛。",
+                        editor: "【攻略】 重點直奔 4F 恐龍廳。\n\n<b>Titanosaur (泰坦巨龍)</b>：長達 122 英尺，因為太大，頭部必須伸出展廳大門，非常震撼。\n\n<b>T-Rex (暴龍)</b>：鎮館之寶，展示了掠食者的完美骨骼結構，想像一下電影裡牠追著骨頭跑的樣子。"
+                    },
+                    {
+                        time: "13:00",
+                        title: "中城旗艦店大戰",
+                        query: "Fifth Avenue New York Shopping",
+                        type: "shop",
+                        icon: "fa-store",
+                        tags: ["Shopping"],
+                        history: "<b>櫥窗購物的發源地</b>：19 世紀末，隨著百貨公司興起，第五大道成為了展示美國財富的櫥窗。這裡發明了「Window Shopping」的概念——即使不買，光是看著那些華麗的櫥窗展示，本身就是一種娛樂。",
+                        listItems: [
+                            { name: "Pelé Soccer", desc: "足球迷聖地。提供各國國家隊球衣，並有現場燙字/臂章服務。" },
+                            { name: "NBA Store", desc: "兩層樓的籃球殿堂。Authentic Jersey (球員版) 區域款式最齊全，亦有復古球衣專區。" },
+                            { name: "Grand Central Terminal", desc: "(順路經過) 走進大廳，抬頭看那天花板的星空圖（雖然星座畫反了），還有諮詢台上方那座價值連城的四面鐘。" },
+                            { name: "MLB Flagship Store", desc: "擁有一整面的 New Era 帽子牆，並販售紐約限定款棒球外套。" },
+                            { name: "FAO Schwarz", desc: "美國最古老的玩具店。重點在於 Jellycat 專區，常有紐約限定款（如：熱狗堡、椒鹽捲餅、自由女神造型）。" },
+                            { name: "Disney Store", desc: "必看自由女神裝扮的米奇米妮公仔，是時代廣場店限定商品。" }
+                        ]
+                    },
+                    {
+                        time: "14:00",
+                        title: "The Halal Guys (Original)",
+                        query: "The Halal Guys 6th Ave",
+                        type: "food",
+                        icon: "fa-drumstick-bite",
+                        tags: ["Street Food"],
+                        winter: "❄️ <b>用餐提示</b>：這是路邊攤，沒有座位。買完後不要站在路邊吹風吃，建議走到附近的飯店大廳外圍，或迅速解決。",
+                        warning: "⚠️ 紅醬警告 (Red Sauce Danger)：Red Sauce 極度危險！請從「一滴」開始嘗試！",
+                        must: ["<b>Chicken over Rice</b> (Regular Platter)。薑黃飯上鋪滿切碎的烤雞肉與皮塔餅。"]
+                    },
+                    {
+                        time: "15:30",
+                        title: "Shake Shack (Original)",
+                        query: "Shake Shack Madison Square Park",
+                        type: "food",
+                        icon: "fa-hamburger",
+                        tags: ["Burger"],
+                        winter: "❄️ <b>暖爐攻略</b>：雖然是露天座位，但這間店有強力的戶外暖爐燈 (Heat Lamps)。<b>請務必搶暖爐正下方的位子</b>，否則漢堡起司會秒凝固，人也會發抖。如果沒位子，建議改去附近的 Eataly 室內站著吃。",
+                        editor: "這是 Shake Shack 的 Original Location (創始店)。它不是一家餐廳，而是一個公園裡的涼亭。一定要坐在戶外綠色鐵椅上，頭頂是掛燈和常春藤，腳邊可能有松鼠跑過，這是不可複製的體驗。",
+                        must: ["<b>ShackBurger</b>：配 Cheese Fries。"]
+                    },
+                    {
+                        time: "16:30",
+                        title: "Dave's New York",
+                        query: "Dave's New York",
+                        type: "shop",
+                        icon: "fa-hard-hat",
+                        tags: ["Workwear"],
+                        editor: "位於 Chelsea。這家店服務紐約勞工 50 年，沒有潮店的架子，只有硬核的選品。價格實惠且尺碼齊全，是尋找正統美式工裝 (Workwear) 的最佳地點。",
+                        must: [
+                            "<b>Ben Davis</b>：推薦 Half-Zip Shirt (半拉鍊襯衫)，尤其是 Hickory Stripe (鐵道條紋) 配色。",
+                            "<b>Carhartt (Mainline)</b>：這裡販售的是真正的 \"Workwear\" 線（非 WIP 潮流線），布料更硬挺耐磨。"
+                        ]
+                    },
+                    {
+                        time: "17:30",
+                        title: "Union Square 補給戰",
+                        query: "Union Square New York",
+                        type: "shop",
+                        icon: "fa-gift",
+                        tags: ["Shopping"],
+                        history: "<b>激進的廣場</b>：Union Square 歷史上一直是紐約政治活動與抗議的中心。但如今這裡最出名的是「綠色市集 (Greenmarket)」，每週一三五六，周邊農夫會將新鮮蔬果運來販售，是紐約「產地到餐桌」運動的重要據點，連結了上城與下城。",
+                        listItems: [
+                            { name: "Wushiland Boba (50嵐)", desc: "台灣人的味蕾救贖。推薦 四季春珍波椰 (1號)，甜度冰塊建議維持台灣習慣。" },
+                            { name: "Toy Tokyo", desc: "地下室才是精華，收藏有大量絕版日本軟膠玩具 (Sofubi)、老式哥吉拉與 Funko Pop 稀有款。" },
+                            { name: "Forbidden Planet", desc: "歐美系漫畫與科幻周邊專賣店，美漫迷與星際大戰迷的寶庫。" },
+                            { name: "Strand Bookstore", desc: "紐約傳奇獨立書店，號稱有「18英里長的書」。必買印有 Strand Logo 的帆布袋 (Tote Bag)。" }
+                        ]
+                    },
+                    {
+                        time: "19:30",
+                        title: "中國城雙重奏 (Chinatown Duo)",
+                        query: "Chinatown New York",
+                        type: "food",
+                        icon: "fa-dumpling",
+                        tags: ["Dinner"],
+                        history: "<b>堅韌的飛地</b>：紐約中國城是西方世界最大的華人聚居地之一。早年因為排華法案，華人只能在此聚集互助，形成了獨特的「城中之城」。這裡依然保留著許多老紐約的痕跡，例如彎曲狹窄的街道（Doyers St 曾被稱為血腥彎角），以及那種混亂卻充滿生命力的氛圍。",
+                        listItems: [
+                            { name: "腸粉王 (Joe's Steam Rice Roll)", desc: "堅持使用石磨米漿製作，口感滑嫩透光。牛肉腸粉或鮮蝦腸粉 ($6-8) 是必點。" },
+                            { name: "美麗華 (Mei Li Wah)", desc: "擁有傳奇地位的 叉燒包 (Roast Pork Bun, $1.75)。外皮帶有菠蘿包的甜酥口感，內餡鹹香流汁。適合外帶當點心。" }
+                        ]
+                    }
+                ]
+            },
+            {
+                day: 4,
+                date: "2/22 (Sat)",
+                theme: "戰利品",
+                subTheme: "The Haul",
+                locations: [
+                    {
+                        time: "08:00",
+                        title: "出發 Woodbury Outlets",
+                        query: "Port Authority Bus Terminal",
+                        type: "spot",
+                        icon: "fa-bus-alt",
+                        tags: ["Transport"],
+                        editor: "交通攻略：從飯店走到 Wall St 站 -> 搭紅線 (2/3) 到 Times Sq-42 St -> 步行至 Port Authority Bus Terminal (PABT)。\n\n巴士班次：務必搭上 09:00 的 Coach USA (ShortLine) 巴士。\n\n購票指南：Google 搜尋 \"Coach USA Woodbury\"，選擇 \"New York to Woodbury Common\"，購買後截圖 QR Code 上車。\n\n優惠券：出發前註冊 \"Simon Premium Outlets VIP Shopper Club\"，現場出示手機可獲數位 Coupon Book。",
+                        tips: "戰略：請推 28 吋空行李箱去。"
+                    },
+                    {
+                        time: "10:00",
+                        title: "Outlet 戰場",
+                        query: "Woodbury Common Premium Outlets",
+                        type: "shop",
+                        icon: "fa-tags",
+                        tags: ["Shopping"],
+                        winter: "❄️ <b>最易感冒的一天</b>：Woodbury 是「鄉村小木屋」式設計，店與店之間是**露天**的。你會不斷在「溫暖室內」與「冷凍戶外」穿梭，流汗又吹風最容易生病。<b>必備裝備：帽子、圍巾</b>（比穿脫外套方便）、暖暖包（貼腰部）。",
+                        listItems: [
+                            { name: "Fendi (Tiffany)", desc: "款式齊全，經典法棍包偶有驚喜。" },
+                            { name: "Longchamp (Tiffany)", desc: "價格約台灣 5-6 折，非常適合買來送禮。" },
+                            { name: "Moncler", desc: "頂級羽絨，排隊較長。" },
+                            { name: "The North Face", desc: "實用禦寒，價格極具競爭力。" },
+                            { name: "Arc'teryx (Andy)", desc: "始祖鳥折扣非常有誠意，Gore-Tex 外套必看。" },
+                            { name: "Gucci / Prada", desc: "建議一到現場先衝這兩家。" }
+                        ]
+                    },
+                    {
+                        time: "16:00",
+                        title: "撤退 (關鍵時間)",
+                        type: "spot",
+                        icon: "fa-clock",
+                        tags: ["Important"],
+                        warning: "【絕對要搭這班車】 16:00 回程巴士。避開下班尖峰，回飯店卸貨。"
+                    },
+                    {
+                        time: "19:30",
+                        title: "Barclays 披薩",
+                        query: "Barclays Center",
+                        type: "food",
+                        icon: "fa-pizza-slice",
+                        tags: ["Dinner"],
+                        editor: "交通：從 Hotel Indigo 搭 紅線 (2號/3號線) 直達 Atlantic Av-Barclays Ctr (僅需 15 分鐘)。",
+                        listItems: [
+                            { name: "Lucali", desc: "紐約最難排、Beyoncé 最愛。只收現金，需自帶酒水 (BYOB)。若排得到是運氣。" },
+                            { name: "Patsy's Pizzeria", desc: "就在 Barclays Center 正對面，經典煤爐烤披薩，道地且方便。" }
+                        ]
+                    }
+                ]
+            },
+            {
+                day: 5,
+                date: "2/23 (Sun)",
+                theme: "告別",
+                subTheme: "The Departure",
+                locations: [
+                    {
+                        time: "09:00",
+                        title: "港食堂 Kong Sihk Tong",
+                        query: "Kong Sihk Tong 港食堂",
+                        type: "food",
+                        icon: "fa-coffee",
+                        tags: ["Brunch"],
+                        editor: "地點：Chinatown (Bayard St.) - 離飯店步行 15 分鐘。\n【編輯選評】 完美的亞洲胃安撫，非常道地的「港式茶餐廳」。",
+                        must: [
+                            "<b>港式奶茶</b> <span class='price-tag'>$5.50</span>：極度滑順，茶味濃郁。",
+                            "<b>法蘭西多士</b> <span class='price-tag'>$8.50</span>：裡面有鹹蛋黃流沙，罪惡感十足但超好吃。",
+                            "<b>焗豬扒飯</b> <span class='price-tag'>$16.00</span>：經典港味，茄汁濃郁。"
+                        ]
+                    },
+                    {
+                        time: "10:00",
+                        title: "前往 JFK",
+                        query: "JFK Airport",
+                        type: "spot",
+                        icon: "fa-plane-departure",
+                        tags: ["Transport"],
+                        warning: "死線：10:00 前上車。Uber 走 Battery Tunnel 接 Gowanus Expy。",
+                        editor: "交通 (Uber/Lyft)：\n告訴司機走 Hugh L. Carey Tunnel (Battery Tunnel) 接 Gowanus Expy。這是從金融區去 JFK 最快的捷徑 (避開中城)。\n\n備案：走到 Fulton St 站搭 A 線 到 Howard Beach 轉 AirTrain。"
+                    },
+                    {
+                        time: "13:46",
+                        title: "起飛：DELTA 1024",
+                        type: "spot",
+                        icon: "fa-plane",
+                        tags: ["Flight"],
+                        editor: "Goodbye, New York. 在飛機上，記得點一杯 Ginger Ale，看著窗外的天際線慢慢變小。"
+                    }
+                ]
+            }
+        ];
+
+        // --- 渲染邏輯 ---
+        let currentDay = 1;
+
+        function init() {
+            renderNav();
+            renderDay(currentDay);
+        }
+
+        function renderNav() {
+            const nav = document.getElementById('day-nav');
+            nav.innerHTML = tripData.map(day => `
+                <button 
+                    onclick="switchDay(${day.day})"
+                    class="flex-shrink-0 px-5 py-2 rounded-full text-sm font-bold transition-all whitespace-nowrap border-2 ${
+                        currentDay === day.day 
+                        ? 'bg-[#2F5A41] text-white border-[#2F5A41] shadow-lg transform scale-105' 
+                        : 'bg-transparent text-gray-500 border-gray-200 hover:bg-gray-100'
+                    }"
+                >
+                    ${day.date}
+                </button>
+            `).join('');
+        }
+
+        function switchDay(dayIndex) {
+            currentDay = dayIndex;
+            renderNav();
+            renderDay(dayIndex);
+            document.getElementById('main-content').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function getGradientClass(type) {
+            switch(type) {
+                case 'food': return 'bg-gradient-food';
+                case 'shop': return 'bg-gradient-shop';
+                case 'coffee': return 'bg-gradient-coffee';
+                default: return 'bg-gradient-spot';
+            }
+        }
+
+        function renderDay(dayIndex) {
+            const data = tripData.find(d => d.day === dayIndex);
+            const container = document.getElementById('main-content');
+            
+            let html = `
+                <div class="mb-10 text-center fade-in">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800">${data.theme}</h2>
+                    <p class="text-[#8B2E2E] serif italic text-xl mt-2 opacity-80">${data.subTheme}</p>
+                    <div class="h-1 w-16 bg-[#8B2E2E] mx-auto mt-5 rounded-full opacity-60"></div>
+                </div>
+                <div class="space-y-12 pb-12">
+            `;
+
+            html += data.locations.map((loc, index) => {
+                const gradientClass = getGradientClass(loc.type);
+                
+                // Content Build
+                let contentHtml = '';
+                if (loc.meta) contentHtml += `<div class="text-xs font-bold text-gray-400 mb-2 uppercase tracking-wide flex items-center gap-1"><i class="fas fa-clock"></i> ${loc.meta}</div>`;
+                
+                // 新增：歷史背景渲染
+                if (loc.history) {
+                    contentHtml += `
+                        <div class="history-box">
+                            <span class="history-title"><i class="fas fa-landmark mr-1"></i> 城市記憶 City Memory</span>
+                            ${loc.history}
+                        </div>
+                    `;
+                }
+
+                // ❄️ 寒冬攻略
+                if (loc.winter) {
+                    contentHtml += `
+                        <div class="winter-box">
+                            <i class="fas fa-snowflake text-[#0EA5E9] text-lg mt-1 flex-shrink-0"></i>
+                            <div>${loc.winter}</div>
+                        </div>
+                    `;
+                }
+
+                if (loc.editor) contentHtml += `<div class="guide-text">${loc.editor}</div>`;
+                if (loc.warning) contentHtml += `<div class="warning-box"><i class="fas fa-exclamation-circle mt-1 flex-shrink-0"></i><div>${loc.warning}</div></div>`;
+                if (loc.tips) contentHtml += `<div class="tips-box"><i class="fas fa-lightbulb mr-1"></i> ${loc.tips}</div>`;
+                
+                // Must Order (List Items)
+                if (loc.must) {
+                    contentHtml += `<div class="must-order"><div class="text-green-700 font-bold text-xs uppercase mb-2 border-b border-green-200 pb-1">推薦必點</div><ul class="space-y-2 text-sm text-gray-700">${loc.must.map(m => `<li class="flex items-start gap-2 must-order-item"><i class="fas fa-check text-green-500 mt-1 flex-shrink-0"></i><span>${m}</span></li>`).join('')}</ul></div>`;
+                }
+
+                if (loc.listItems) contentHtml += `<div class="grid grid-cols-1 gap-3 mt-4">${loc.listItems.map(item => `<div class="bg-slate-50 p-3 rounded border border-slate-200"><div class="font-bold text-slate-800 text-sm mb-1">${item.name}</div><div class="text-xs text-slate-600 leading-relaxed">${item.desc}</div></div>`).join('')}</div>`;
+
+                const mapBtn = loc.query ? `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc.query)}" target="_blank" class="map-btn"><i class="fas fa-location-arrow mr-1"></i> MAP</a>` : '';
+
+                return `
+                <div class="ny-card fade-in" style="animation-delay: ${index * 0.1}s">
+                    <!-- Sticker/Illustration Header -->
+                    <div class="sticker-header ${gradientClass}">
+                        <div class="absolute top-4 left-4 bg-white/20 backdrop-blur border border-white/30 text-white px-3 py-1 rounded-full font-bold text-xs shadow-sm">
+                            ${loc.time}
+                        </div>
+                        <div class="absolute top-4 right-4">
+                             ${mapBtn}
+                        </div>
+                        
+                        <i class="fas ${loc.icon} sticker-bg-icon"></i>
+                        <i class="fas ${loc.icon} sticker-main-icon"></i>
+                        <div class="text-lg font-bold tracking-widest uppercase opacity-90">${loc.tags[0]}</div>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-2xl font-bold text-slate-900 leading-tight mb-2 font-serif">${loc.title}</h3>
+                            </div>
+                        </div>
+                        
+                        ${contentHtml}
+                    </div>
+                </div>
+                `;
+            }).join('');
+
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        init();
+    </script>
+</body>
+</html>

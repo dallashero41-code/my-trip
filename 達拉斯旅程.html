@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>THE INSIGHT DAL: 5-Day Master Content Bible</title>
+    <style>
+        :root {
+            /* Base Mavs Colors */
+            --mavs-blue: #00538C;
+            --mavs-silver: #8A8D8F; /* Darker silver for light theme */
+            --mavs-black: #000000;
+            
+            /* Desert Theme Colors */
+            --desert-sand: #DFD3C3;
+            --desert-light: #F0EAD6;
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --text-main: #2C2C2C;
+            --text-muted: #555555;
+            
+            /* Dynamic Day Color */
+            --accent-color: #00538C; 
+            --accent-glow: rgba(0, 83, 140, 0.2);
+        }
+
+        body.day1-theme { --accent-color: #00538C; --accent-glow: rgba(0, 83, 140, 0.2); } /* Royal Blue */
+        body.day2-theme { --accent-color: #B8860B; --accent-glow: rgba(184, 134, 11, 0.2); } /* Dark Gold */
+        body.day3-theme { --accent-color: #008080; --accent-glow: rgba(0, 128, 128, 0.2); } /* Teal/Tech */
+        body.day4-theme { --accent-color: #C71585; --accent-glow: rgba(199, 21, 133, 0.2); } /* Medium Violet Red */
+        body.day5-theme { --accent-color: #D2691E; --accent-glow: rgba(210, 105, 30, 0.2); } /* Sunset/Chocolate */
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            /* Desert Color + Basketball/Dallas Background */
+            background-color: var(--desert-sand);
+            background-image: 
+                linear-gradient(to bottom, rgba(223, 211, 195, 0.88), rgba(240, 234, 214, 0.95)), 
+                url('https://images.unsplash.com/photo-1504450758481-7338eba7524a?auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 40px;
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        header {
+            background: rgba(240, 234, 214, 0.95);
+            padding: 15px 20px 10px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #D1C7B7;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        h1 { margin: 0; font-size: 21px; font-weight: 800; color: var(--mavs-blue); letter-spacing: 0.5px; }
+        .subtitle { font-size: 13px; color: var(--text-muted); margin-top: 4px; font-weight: 600; }
+        .intro-box { 
+            background: rgba(255, 255, 255, 0.7); 
+            padding: 12px; 
+            border-radius: 8px; 
+            margin-top: 10px; 
+            font-size: 13px; 
+            color: #333; 
+            border-left: 3px solid var(--mavs-blue); 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .progress-container { height: 5px; background: #D1C7B7; width: 100%; margin-top: 15px; border-radius: 3px; overflow: hidden; }
+        .progress-bar { height: 100%; background: var(--accent-color); width: 0%; transition: width 0.3s, background 0.3s; box-shadow: 0 0 8px var(--accent-glow); }
+
+        .container { padding: 15px; max-width: 800px; margin: 0 auto; }
+
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            background: rgba(240, 234, 214, 0.95);
+            padding: 12px 0;
+            position: sticky;
+            top: 92px; 
+            z-index: 90;
+            border-bottom: 1px solid #D1C7B7;
+            scrollbar-width: none; 
+            backdrop-filter: blur(10px);
+        }
+        .tabs::-webkit-scrollbar { display: none; }
+        
+        .tab-btn {
+            background: #fff; border: 1px solid #D1C7B7; color: var(--text-muted);
+            padding: 8px 18px; margin: 0 6px; border-radius: 20px; font-size: 14px;
+            white-space: nowrap; cursor: pointer; transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+        .tab-btn:first-child { margin-left: 15px; }
+        .tab-btn:last-child { margin-right: 15px; }
+        .tab-btn.active {
+            background: var(--accent-color); color: #fff; border-color: var(--accent-color);
+            box-shadow: 0 4px 10px var(--accent-glow); font-weight: bold;
+        }
+
+        .day-section { display: none; animation: fadeIn 0.4s; }
+        .day-section.active { display: block; }
+
+        .day-header { margin: 25px 0 20px; padding-left: 12px; border-left: 5px solid var(--accent-color); }
+        .day-title { font-size: 22px; font-weight: 800; color: var(--mavs-blue); text-shadow: 1px 1px 2px rgba(255,255,255,0.5); }
+        .day-theme { font-size: 14px; color: var(--text-muted); margin-top: 6px; font-weight: 500;}
+
+        .card {
+            background: var(--card-bg); border-radius: 12px; padding: 18px; margin-bottom: 20px;
+            position: relative; border: 1px solid rgba(255,255,255,0.5); 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06); transition: opacity 0.3s, transform 0.2s;
+        }
+        .card.completed { opacity: 0.6; filter: grayscale(0.2); background: rgba(240, 234, 214, 0.7); }
+        
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; border-bottom: 1px solid #E5DFD3; padding-bottom: 12px; }
+        .time { font-family: 'Courier New', monospace; font-weight: 800; color: var(--accent-color); font-size: 18px; background: rgba(0,0,0,0.03); padding: 2px 6px; border-radius: 4px; }
+        .check-btn {
+            background: #fff; border: 2px solid #C0B5A1; width: 28px; height: 28px;
+            border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; color: transparent; font-size: 16px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .card.completed .check-btn { background: var(--accent-color); border-color: var(--accent-color); color: white; box-shadow: none; }
+
+        .location-title { font-size: 19px; font-weight: 800; margin-bottom: 10px; color: var(--mavs-black); }
+        .location-meta { font-size: 13px; color: var(--text-muted); margin-bottom: 15px; display: flex; flex-wrap: wrap; gap: 8px; }
+        .meta-tag { background: #F5EFE6; padding: 4px 8px; border-radius: 4px; display: inline-flex; align-items: center; border: 1px solid #E5DFD3; font-weight: 500; }
+        
+        .content-block { font-size: 15px; color: #333333; }
+        .content-block p { margin: 10px 0; }
+        .content-block ul, .content-block ol { margin: 10px 0; padding-left: 24px; }
+        .content-block li { margin-bottom: 8px; }
+        .content-block strong { color: var(--mavs-black); font-weight: 700; }
+        
+        .recommendation {
+            background: rgba(0, 83, 140, 0.04); border-left: 4px solid var(--accent-color);
+            padding: 12px 15px; margin-top: 15px; border-radius: 0 8px 8px 0;
+        }
+        .rec-title { font-weight: 800; color: var(--accent-color); margin-bottom: 8px; display: block; font-size: 15px; }
+
+        .map-btn {
+            display: flex; align-items: center; justify-content: center;
+            background: var(--mavs-blue); color: #fff; text-decoration: none; padding: 12px;
+            border-radius: 8px; font-size: 15px; font-weight: bold; margin-top: 15px;
+            border: none; transition: background 0.2s; width: 100%;
+            box-shadow: 0 4px 10px rgba(0, 83, 140, 0.3);
+        }
+        .map-btn:active { transform: scale(0.98); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Highlight specific text */
+        .highlight { color: #D2691E; font-weight: bold; }
+    </style>
+</head>
+<body class="day1-theme">
+
+<header>
+    <h1>THE INSIGHT DAL</h1>
+    <div class="subtitle">5-Day Master Content Bible (Desert x Mavs Edition)</div>
+    <div class="intro-box">
+        <strong>旅客：</strong> 2人 (自駕遊)<br>
+        <strong>住宿：</strong> 2330 Kirby St, Dallas (Uptown)<br>
+        <strong>交通：</strong> Tesla Model Y (DFW 機場取還)<br>
+        <strong>風格：</strong> 深度朝聖、收藏文化、在地生活感、榜單美食巡禮
+    </div>
+    <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+</header>
+
+<div class="tabs">
+    <button class="tab-btn active" onclick="switchDay(1)">DAY 1</button>
+    <button class="tab-btn" onclick="switchDay(2)">DAY 2</button>
+    <button class="tab-btn" onclick="switchDay(3)">DAY 3</button>
+    <button class="tab-btn" onclick="switchDay(4)">DAY 4</button>
+    <button class="tab-btn" onclick="switchDay(5)">DAY 5</button>
+</div>
+
+<main class="container">
+
+    <!-- DAY 1 -->
+    <div id="day1" class="day-section active">
+        <div class="day-header">
+            <div class="day-title">DAY 01 | 3/01 (Sun) 傳奇的開端</div>
+            <div class="day-theme">【今日導讀】今天的色調是「皇家藍與起司黃」。行程重點在於順利完成 Turo 無接觸取車，適應德州自駕環境，並於晚間進行球賽朝聖體驗。</div>
+        </div>
+
+        <div class="card" id="d1-01">
+            <div class="card-header">
+                <span class="time">12:33</span>
+                <button class="check-btn" onclick="toggleCard('d1-01')">✔</button>
+            </div>
+            <div class="location-title">🛬 抵達與啟程：DFW Airport</div>
+            <div class="content-block">
+                <ul>
+                    <li><strong>行動：</strong> 下機後跟隨 "Baggage Claim" 指示，前往 E13-E15 轉盤領取行李。</li>
+                </ul>
+                <div class="recommendation">
+                    <span class="rec-title">Turo 取車攻略 (Delta/Terminal E 專屬)：</span>
+                    <ol>
+                        <li><strong>確認位置：</strong> 查看房東訊息。Delta 旅客車輛通常停放於 <strong>Terminal E Parking Garage</strong>。</li>
+                        <li><strong>前往停車場：</strong> 領完行李直接走出航廈大門，過斑馬線即達停車樓（無需搭接駁車）。</li>
+                        <li><strong>尋車與檢查：</strong> 依照樓層 (Level) 與車位 (Spot) 找到車輛。開啟 Turo App <strong>拍照上傳</strong>（重點檢查輪框 Rims、玻璃裂痕）。</li>
+                        <li><strong>解鎖與啟動：</strong> 聯繫房東遠端解鎖，或使用已授權的 Tesla App 解鎖。檢查中控台或手套箱內的 <strong>Key Card</strong> 與 <strong>停車票卡 (Ticket)</strong>。</li>
+                        <li><strong>出場 (Exit)：</strong> 駕駛至出口閘門，使用車內停車票卡，刷個人信用卡支付停車費（Est. $2-$27）離場。</li>
+                    </ol>
+                </div>
+                <p><strong>車主攻略：</strong> 檢查 Autopilot 設定，連結手機藍牙。德州陽光強烈，建議確認車內空調預冷功能 (Pre-conditioning) 運作正常。</p>
+                <p><strong>導航設定：</strong> 輸入第一站 In-N-Out Burger。</p>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=DFW+Airport+Terminal+E" target="_blank" class="map-btn">📍 導航至 DFW Terminal E</a>
+        </div>
+
+        <div class="card" id="d1-02">
+            <div class="card-header">
+                <span class="time">14:00</span>
+                <button class="check-btn" onclick="toggleCard('d1-02')">✔</button>
+            </div>
+            <div class="location-title">🍔 德州第一餐：In-N-Out Burger (Irving)</div>
+            <div class="location-meta">
+                <span class="meta-tag">🕒 10:30 - 01:00</span>
+                <span class="meta-tag">⏳ Drive-thru 15-20 分鐘；內用約 10 分鐘。無預約。</span>
+            </div>
+            <div class="content-block">
+                <p><strong>地點：</strong> 2413 W Airport Fwy, Irving (位於機場往市區的順路位置)</p>
+                <p><strong>【店家簡介】</strong> 源自加州的漢堡連鎖店，以此間分店作為進入達拉斯市區的中繼站，腹地廣大，動線適合剛取車的駕駛適應車輛。提供典型的美式 Drive-thru 體驗。</p>
+                <div class="recommendation">
+                    <span class="rec-title">【推薦品項 & 2026 預估價】</span>
+                    <ul>
+                        <li><strong>Double-Double Animal Style (Est. $6.75)：</strong> 隱藏菜單。特色為兩層牛肉、起司，加上焦糖洋蔥與特製醬料。</li>
+                        <li><strong>Animal Style Fries (Est. $5.50)：</strong> 覆蓋起司、烤洋蔥與醬料的薯條。</li>
+                        <li><strong>Neapolitan Shake (Est. $3.75)：</strong> 草莓、香草、巧克力三色混合奶昔。</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=2413+W+Airport+Fwy,+Irving,+TX" target="_blank" class="map-btn">📍 導航至 In-N-Out</a>
+        </div>
+
+        <div class="card" id="d1-03">
+            <div class="card-header">
+                <span class="time">15:30</span>
+                <button class="check-btn" onclick="toggleCard('d1-03')">✔</button>
+            </div>
+            <div class="location-title">🏨 飯店 Check-in & 整備</div>
+            <div class="content-block">
+                <p><strong>地點：</strong> 2330 Kirby St, Dallas</p>
+                <p><strong>準備：</strong> 辦理入住手續，稍作休息並更換觀賽服裝（球衣），檢查手作看板攜帶狀況。</p>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=2330+Kirby+St,+Dallas" target="_blank" class="map-btn">📍 導航至住宿地</a>
+        </div>
+
+        <div class="card" id="d1-04">
+            <div class="card-header">
+                <span class="time">17:00</span>
+                <button class="check-btn" onclick="toggleCard('d1-04')">✔</button>
+            </div>
+            <div class="location-title">🏛️ 信仰朝聖：Victory Plaza</div>
+            <div class="content-block">
+                <p><strong>地點：</strong> American Airlines Center (南側廣場)</p>
+                <p><strong>【景點介紹】</strong><br><strong>Dirk Nowitzki Statue (德製坦克銅像)</strong>：位於球場南側廣場，由雕塑家 Omri Amrany 創作。雕像捕捉了標誌性的「金雞獨立後仰跳投 (One-legged Fadeaway)」動作。底座刻有 "Loyalty never fades away" 字樣。</p>
+                <p><strong>【建議行動】</strong> 利用傍晚光線（Magic Hour）與銅像合影。</p>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Dirk+Nowitzki+Statue,+Dallas" target="_blank" class="map-btn">📍 導航至銅像</a>
+        </div>
+
+        <div class="card" id="d1-05">
+            <div class="card-header">
+                <span class="time">17:30</span>
+                <button class="check-btn" onclick="toggleCard('d1-05')">✔</button>
+            </div>
+            <div class="location-title">🏟️ 進場：American Airlines Center (The Hangar)</div>
+            <div class="location-meta">
+                <span class="meta-tag">座位：100 Level (一樓)</span>
+                <span class="meta-tag">⚠️ 包包限制 4.5" x 6.5"</span>
+            </div>
+            <div class="content-block">
+                <p><strong>⏳ 入場規範：</strong> 包包尺寸限制嚴格 (4.5" x 6.5")，建議僅攜帶手機與看板。</p>
+                <div class="recommendation">
+                    <span class="rec-title">【觀賽重點】</span>
+                    <ol>
+                        <li><strong>賽前熱身：</strong> 建議前往 Section 118-119 區域，近距離觀察球員賽前投籃與運球熱身。</li>
+                        <li><strong>場館歷史：</strong> 尋找懸掛於上空的 2011 年總冠軍旗幟與 41 號退休球衣。</li>
+                        <li><strong>商店重點 (The Hangar)：</strong> 尋找 <strong>"Game Used Authentics"</strong> 專區，販售比賽實際使用過的球網碎片、地板塊或球衣，屬於收藏級商品。</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="d1-06">
+            <div class="card-header">
+                <span class="time">19:00</span>
+                <button class="check-btn" onclick="toggleCard('d1-06')">✔</button>
+            </div>
+            <div class="location-title">🏀 Game Time: Dallas Mavericks</div>
+            <div class="content-block">
+                <p><strong>場內餐飲預估：</strong> 啤酒 (Est. $18.00)、熱狗 (Est. $10.00)、The Dirk Burger (Est. $20.00)。</p>
+            </div>
+        </div>
+
+        <div class="card" id="d1-07">
+            <div class="card-header">
+                <span class="time">22:00</span>
+                <button class="check-btn" onclick="toggleCard('d1-07')">✔</button>
+            </div>
+            <div class="location-title">🍨 賽後甜點：Botolino Gelato Artigianale</div>
+            <div class="location-meta">
+                <span class="meta-tag">🕒 12:00 - 23:00 (週五六至 24:00)</span>
+            </div>
+            <div class="content-block">
+                <p><strong>地點：</strong> 2116 Greenville Ave</p>
+                <p><strong>【店家簡介】</strong> 由義大利波隆那籍老闆經營的義式冰淇淋店，強調傳統工法與天然原料。店內環境明亮現代。</p>
+                <div class="recommendation">
+                    <span class="rec-title">【推薦品項 & 2026 預估價】</span>
+                    <ul>
+                        <li><strong>Small Cup (2 flavors) (Est. $8.50)：</strong> 特色口味為 White Coffee (白咖啡，外觀白色但具咖啡風味) 與 Olive Oil (橄欖油，口感滑順帶草本香)。</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Botolino+Gelato+Artigianale" target="_blank" class="map-btn">📍 導航至 Botolino</a>
+        </div>
+    </div>
+
+    <!-- DAY 2 -->
+    <div id="day2" class="day-section">
+        <div class="day-header">
+            <div class="day-title">DAY 02 | 3/02 (Mon) 生活質感與海報尋寶</div>
+            <div class="day-theme">【今日導讀】今天的色調是「可頌金與水墨黑」。行程涵蓋法式烘焙早餐、生態體驗、精品購物與 Bishop Arts 藝術街區探索。</div>
+        </div>
+
+        <div class="card" id="d2-01">
+            <div class="card-header">
+                <span class="time">09:00</span>
+                <button class="check-btn" onclick="toggleCard('d2-01')">✔</button>
+            </div>
+            <div class="location-title">🥐 晨間儀式：Village Baking Co.</div>
+            <div class="location-meta">
+                <span class="meta-tag">🕒 07:00 - 19:00</span>
+                <span class="meta-tag">⏳ 早上 9 點約需排 10-15 分鐘</span>
+            </div>
+            <div class="content-block">
+                <p><strong>地點：</strong> 1921 Greenville Ave (Lower Greenville)</p>
+                <p><strong>【店家簡介】</strong> 達拉斯知名法式烘焙坊，以道地法式酥皮點心聞名。提供戶外座位區。</p>
+                <div class="recommendation">
+                    <span class="rec-title">【推薦品項 & 2026 預估價】</span>
+                    <ul>
+                        <li><strong>Kouign Amann (Est. $6.00)：</strong> 焦糖奶油酥，特色為酥脆焦糖外層與多層次奶油內餡。</li>
+                        <li><strong>Almond Croissant (Est. $6.50)：</strong> 杏仁可頌。</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Village+Baking+Co+Lower+Greenville" target="_blank" class="map-btn">📍 導航至 Village Baking Co.</a>
+        </div>
+
+        <div class="card" id="d2-02">
+            <div class="card-header">
+                <span class="time">10:30</span>
+                <button class="check-btn" onclick="toggleCard('d2-02')">✔</button>
+            </div>
+            <div class="location-title">🐠 生態體驗：Dallas World Aquarium</div>
+            <div class="content-block">
+                <p><strong>門票預估：</strong> Adult (Est. $34.95)。</p>
+                <p><strong>【景點介紹】</strong> 改建自舊倉庫的室內生態園區。特色並非傳統水族館，而是模擬亞馬遜雨林的多層次生態系，包含自由活動的鳥類與靈長類。</p>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Dallas+World+Aquarium" target="_blank" class="map-btn">📍 導航至水族館</a>
+        </div>
+
+        <div class="card" id="d2-03">
+            <div class="card-header">
+                <span class="time">13:00</span>
+                <button class="check-btn" onclick="toggleCard('d2-03')">✔</button>
+            </div>
+            <div class="location-title">🍜 韓式料理：Hampyong Noodle (韓平冷麵)</div>
+            <div class="location-meta">
+                <span class="meta-tag">🕒 11:00 - 21:30</span>
+            </div>
+            <div class="content-block">
+                <p><strong>地點：</strong> 11445 Emerald St #116</p>
+                <p><strong>【店家簡介】</strong> 專營韓式冷麵的餐廳，麵條極細且具嚼勁，口味清爽。</p>
+                <div class="recommendation">
+                    <span class="rec-title">【推薦品項 & 2026 預估價】</span>
+                    <ul>
+                        <li><strong>Mul-Naengmyeon (水冷麵) (Est. $19.00)：</strong> 碎冰高湯基底。</li>
+                        <li><strong>Galbi (烤排骨) (Est. $30.00)：</strong> 炭火烤製醃漬排骨。</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Hampyong+Noodle+Dallas" target="_blank" class="map-btn">📍 導航至韓平冷麵</a>
+        </div>
+
+        <div class="card" id="d2-04">
+            <div class="card-header">
+                <span class="time">14:30</span>
+                <button class="check-btn" onclick="toggleCard('d2-04')">✔</button>
+            </div>
+            <div class="location-title">🛍️ 購物與充電：NorthPark Center</div>
+            <div class="content-block">
+                <p><strong>【車主攻略】</strong> Tesla Supercharger 補電。</p>
+                <p><strong>【商場簡介】</strong> 結合藝術展覽與高端購物的商場，內部陳列 Andy Warhol 等藝術家作品。</p>
+                <div class="recommendation">
+                    <span class="rec-title">【重點品牌】</span>
+                    <ul>
+                        <li><strong>Sephora Flagship:</strong> 旗艦店規格，品項齊全。</li>
+                        <li><strong>Luxury Brands:</strong> 包含 Louis Vuitton, Gucci 等精品。</li>
+                        <li><strong>Bookmarc / Taschen:</strong> (需確認當季櫃位) 販售藝術、電影、攝影類精裝書籍。</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=NorthPark+Center" target="_blank" class="map-btn">📍 導航至 NorthPark</a>
+        </div>
+
+        <div class="card" id="d2-05">
+            <div class="card-header">
+                <span class="time">17:00</span>
+                <button class="check-btn" onclick="toggleCard('d2-05')">✔</button>
+            </div>
+            <div class="location-title">🎨 藝術與選物：Bishop Arts District</div>
+            <div class="content-block">
+                <p><strong>【區域簡介】</strong> 達拉斯獨立店家密集的歷史街區，以紅磚建築與壁畫聞名。</p>
+                <div class="recommendation">
+                    <span class="rec-title">【重點店家】</span>
+                    <ul>
+                        <li><strong>We Are 1976:</strong> 設計工作室兼選物店。主打 <strong>手刷海報 (Screen Prints)</strong>、Gig Posters (演唱會海報)、電影藝術海報，以及精緻日式文具與家居擺飾。</li>
+                        <li><strong>Spinster Records:</strong> 黑膠唱片行，販售各類黑膠與音樂相關海報、服飾。</li>
+                        <li><strong>Dude, Sweet Chocolate:</strong> 創意巧克力專門店，以特殊食材混搭聞名 (如辣椒、藍紋起司)。</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Bishop+Arts+District" target="_blank" class="map-btn">📍 導航至 Bishop Arts</a>
+        </div>
+
+        <div class="card" id="d2-06">
+            <div class="card-header">
+                <span class="time">18:45</span>
+                <button class="check-btn" onclick="toggleCard('d2-06')">✔</button>
+            </div>
+            <div class="location-title">🍖 德式燒烤：Terry Black’s BBQ</div>
+            <div class="location-meta">
+                <span class="meta-tag">🕒 11:00 - 21:30</span>
+                <span class="meta-tag">⏳ 晚餐需排隊 30-45 分鐘。無預約。</span>
+            </div>
+            <div class="content-block">
+                <p><strong>地點：</strong> 3025 Main St (Deep Ellum)</p>
+                <p><strong>【店家簡介】</strong> 源自 Austin 的知名 BBQ 品牌，提供傳統中德州風味燒烤。採自助式排隊切肉點餐。</p>
+                <div class="recommendation">
+                    <span class="rec-title">【推薦品項 & 2026 預估價】</span>
+                    <ul>
+                        <li><strong>Beef Rib (牛巨肋) (Est. $45.00 / lb)：</strong> 招牌菜色，體積巨大，以黑胡椒與鹽簡單調味。</li>
+                        <li><strong>Brisket (Est. $38.00 / lb)：</strong> 牛胸肉，建議選擇 Moist (肥瘦相間) 部位。</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Terry+Black's+BBQ+Dallas" target="_blank" class="map-btn">📍 導航至 Terry Black's</a>
+        </div>
+    </div>
+
+    <!-- DAY 3 -->
+    <div id="day3" class="day-section">
+        <div class="day-header">
+            <div class="day-title">DAY 03 | 3/03 (Tue) 奧斯汀朝聖之路</div>
+            <div class="day-theme">【今日導讀】今天的色調是「科技銀與霓虹彩」。行程包含跨城公路駕駛、Tesla 總部參訪、榜單級燒烤體驗以及特色玩具店巡禮。</div>
+        </div>
+
+        <div class="card" id="d3-01">
+            <div class="card-header">
+                <span class="time">08:00</span>
+                <button class="check-btn" onclick="toggleCard('d3-01')">✔</button>
+            </div>
+            <div class="location-title">☕ 咖啡補給：Wayward Coffee Co.</div>
+            <div class="content-block">
+                <div class="recommendation">
+                    <span class="rec-title">【推薦品項 & 2026 預估價】</span>
+                    <ul>
+                        <li><strong>Pour-over (手沖) (Est. $7.00)：</strong> 提供多種單品豆選擇。</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Wayward+Coffee+Co" target="_blank" class="map-btn">📍 導航至 Wayward Coffee</a>
+        </div>
+
+        <div class="card" id="d3-02">
+            <div class="card-header">
+                <span class="time">11:00</span>
+                <button class="check-btn" onclick="toggleCard('d3-02')">✔</button>
+            </div>
+            <div class="location-title">🍖 榜單名店：Interstellar BBQ (Austin)</div>
+            <div class="location-meta">
+                <span class="meta-tag">🕒 11:00 - 售完為止 (通常 15:00)</span>
+                <span class="meta-tag">⚠️ 建議於 10:30 前抵達排隊</span>
+            </div>
+            <div class="content-block">
+                <p><strong>地點：</strong> 12233 Ranch Rd 620 N, Austin</p>
+                <p><strong>⏳ 排隊攻略：</strong> 曾獲《Texas Monthly》評選為全德州第二名。</p>
+                <div class="recommendation">
+                    <span class="rec-title">【推薦品項 & 2026 預估價】</span>
+                    <ul>
+                        <li><strong>Peach Tea Glazed Pork Belly (蜜桃茶燻五花肉) (Est. $36.00 / lb)：</strong> 特色料理，厚切豬五花佐以蜜桃茶醬汁。</li>
+                        <li><strong>Tipsy Turkey (Est. $30.00 / lb)：</strong> 啤酒醃漬火雞胸肉。</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Interstellar+BBQ+Austin" target="_blank" class="map-btn">📍 導航至 Interstellar BBQ</a>
+        </div>
+
+        <div class="card" id="d3-03">
+            <div class="card-header">
+                <span class="time">13:30</span>
+                <button class="check-btn" onclick="toggleCard('d3-03')">✔</button>
+            </div>
+            <div class="location-title">🏭 產業參訪：Tesla Giga Texas</div>
+            <div class="content-block">
+                <p><strong>【景點行動】</strong> 駕駛車輛繞行工廠周邊道路 (1 Tesla Road)，可於 Cybertruck 展示區或工廠標誌前停留拍照。</p>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Tesla+Giga+Texas" target="_blank" class="map-btn">📍 導航至 Giga Texas</a>
+        </div>
+
+        <div class="card" id="d3-04">
+            <div class="card-header">
+                <span class="time">15:00</span>
+                <button class="check-btn" onclick="toggleCard('d3-04')">✔</button>
+            </div>
+            <div class="location-title">🧸 玩具與街區：SoCo District (South Congress)</div>
+            <div class="content-block">
+                <div class="recommendation">
+                    <span class="rec-title">【重點店家】</span>
+                    <ul>
+                        <li><strong>Toy Joy:</strong> 奧斯汀知名玩具店。販售大量 <strong>日系怪獸軟膠 (Sofubi)</strong>、美式復古玩具、電影公仔與各式新奇雜貨。</li>
+                        <li><strong>YETI Flagship Store:</strong> 戶外品牌旗艦店，提供各式保溫產品與客製化服務，常有 Austin 限定配色。</li>
+                        <li><strong>Allen's Boots:</strong> 大型牛仔靴專賣店，陳列數千雙手工皮靴。</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=South+Congress+Austin" target="_blank" class="map-btn">📍 導航至 SoCo District</a>
+        </div>
+
+        <div class="card" id="d3-05">
+            <div class="card-header">
+                <span class="time">18:00</span>
+                <button class="check-btn" onclick="toggleCard('d3-05')">✔</button>
+            </div>
+            <div class="location-title">⛽ 公路補給：Buc-ee's (Temple, TX)</div>
+            <div class="content-block">
+                <p><strong>地點：</strong> I-35 回程路上</p>
+                <p><strong>【店家簡介】</strong> 德州著名的巨型連鎖便利商店與加油站，以吉祥物海狸聞名。</p>
+                <div class="recommendation">
+                    <span class="rec-title">【推薦品項 & 2026 預估價】</span>
+                    <ul>
+                        <li><strong>Beaver Nuggets (Est. $6.00)：</strong> 甜味玉米脆片。</li>
+                        <li><strong>Buc-ee's T-shirt (Est. $20.00)：</strong> 品牌周邊服飾。</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Buc-ee's+Temple+TX" target="_blank" class="map-btn">📍 導航至 Buc-ee's</a>
+        </div>
+    </div>
+
+    <!-- DAY 4 -->
+    <div id="day4" class="day-section">
+        <div class="day-header">
+            <div class="day-title">DAY 04 | 3/04 (Wed) 收藏文化與日式選物</div>
+            <div class="day-theme">【今日導讀】今天的色調是「像素彩與日系粉」。行程集中於北達拉斯區域，涵蓋大型漫畫店、電子遊戲博物館、日式生活百貨與 Outlet 購物。</div>
+        </div>
+
+        <div class="card" id="d4-01">
+            <div class="card-header">
+                <span class="time">09:30</span>
+                <button class="check-btn" onclick="toggleCard('d4-01')">✔</button>
+            </div>
+            <div class="location-title">🥐 特色早餐：Lubella's Patisserie</div>
+            <div class="content-block">
+                <p><strong>地點：</strong> 9028 Garland Rd</p>
+                <div class="recommendation">
+                    <span class="rec-title">【推薦品項 & 2026 預估價】</span>
+                    <ul>
+                        <li><strong>Zucchini Flower Danish (Est. $6.50)：</strong> 櫛瓜花丹麥酥，結合起司與蔬菜的鹹點。</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Lubella's+Patisserie" target="_blank" class="map-btn">📍 導航至 Lubella's</a>
+        </div>
+
+        <div class="card" id="d4-02">
+            <div class="card-header">
+                <span class="time">10:00</span>
+                <button class="check-btn" onclick="toggleCard('d4-02')">✔</button>
+            </div>
+            <div class="location-title">🎮 產業博物館：National Videogame Museum</div>
+            <div class="content-block">
+                <p><strong>地點：</strong> Frisco</p>
+                <p><strong>門票預估：</strong> General Admission (Est. $18.00)。</p>
+                <p><strong>【景點介紹】</strong> 展示電子遊戲產業歷史的博物館，館內收藏各世代主機、珍稀遊戲軟體，並設有可遊玩的機台區。</p>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=National+Videogame+Museum+Frisco" target="_blank" class="map-btn">📍 導航至博物館</a>
+        </div>
+
+        <div class="card" id="d4-03">
+            <div class="card-header">
+                <span class="time">11:45</span>
+                <button class="check-btn" onclick="toggleCard('d4-03')">✔</button>
+            </div>
+            <div class="location-title">🦸‍♂️ 收藏專門店：Madness Games & Comics (Plano)</div>
+            <div class="location-meta">
+                <span class="meta-tag">🕒 11:00 - 21:00</span>
+            </div>
+            <div class="content-block">
+                <p><strong>地點：</strong> 3000 Custer Rd, Plano</p>
+                <p><strong>【店家簡介】</strong> 該地區規模最大的漫畫與收藏品專賣店。</p>
+                <div class="recommendation">
+                    <span class="rec-title">【販售重點】</span>
+                    <ul>
+                        <li><strong>Posters:</strong> 販售各類美式漫畫封面海報與電影海報。</li>
+                        <li><strong>Toys & Collectibles:</strong> 擁有大量 Funko Pop、Marvel Legends 模型、雕像與日系公仔庫存。</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Madness+Games+and+Comics+Plano" target="_blank" class="map-btn">📍 導航至 Madness</a>
+        </div>
+
+        <div class="card" id="d4-04">
+            <div class="card-header">
+                <span class="time">13:30</span>
+                <button class="check-btn" onclick="toggleCard('d4-04')">✔</button>
+            </div>
+            <div class="location-title">🎀 日系生活百貨：Teso Life (特搜商城) & 韓系選物</div>
+            <div class="content-block">
+                <p><strong>地點：</strong> Carrollton (Old Denton Rd)</p>
+                <div class="recommendation">
+                    <span class="rec-title">【重點店家】</span>
+                    <ul>
+                        <li><strong>Teso Life (Carrollton):</strong> 大型日式生活百貨。販售日本進口彩妝 (Canmake, Kate 等)、零食、<strong>盲盒公仔</strong>、廚房用品與家居雜貨。</li>
+                        <li><strong>Kinokuniya (紀伊國屋):</strong> 書店與文具店，販售日文書籍、精緻文具與吉卜力周邊。</li>
+                        <li><strong>Pink Box:</strong> 位於 H-Mart 二樓，專營韓系飾品、髮飾與生活雜貨。</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Teso+Life+Carrollton" target="_blank" class="map-btn">📍 導航至 Teso Life</a>
+        </div>
+
+        <div class="card" id="d4-05">
+            <div class="card-header">
+                <span class="time">15:30</span>
+                <button class="check-btn" onclick="toggleCard('d4-05')">✔</button>
+            </div>
+            <div class="location-title">🛍️ 品牌購物：Allen Premium Outlets</div>
+            <div class="content-block">
+                <p><strong>地點：</strong> 820 W Stacy Rd, Allen</p>
+                <div class="recommendation">
+                    <span class="rec-title">【商場重點】</span>
+                    <ul>
+                        <li><strong>Luxury & Fashion:</strong> Tory Burch, Coach, Longchamp。</li>
+                        <li><strong>Athleisure:</strong> Lululemon, Nike。</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Allen+Premium+Outlets" target="_blank" class="map-btn">📍 導航至 Outlet</a>
+        </div>
+
+        <div class="card" id="d4-06">
+            <div class="card-header">
+                <span class="time">19:00</span>
+                <button class="check-btn" onclick="toggleCard('d4-06')">✔</button>
+            </div>
+            <div class="location-title">🥓 復古韓式料理：Daldongnae Korean BBQ (達東內)</div>
+            <div class="location-meta">
+                <span class="meta-tag">🕒 16:30 - 24:00</span>
+                <span class="meta-tag">⏳ 熱門時段建議 18:30 前抵達或預留 30 分鐘候位</span>
+            </div>
+            <div class="content-block">
+                <p><strong>地點：</strong> Carrollton</p>
+                <p><strong>【店家簡介】</strong> 主打 1980 年代韓國復古風格裝潢的烤肉店。</p>
+                <div class="recommendation">
+                    <span class="rec-title">【推薦品項 & 2026 預估價】</span>
+                    <ul>
+                        <li><strong>Pork Belly (Est. $28.00)：</strong> 厚切豬五花。</li>
+                        <li><strong>Corn Cheese (Est. $12.00)：</strong> 鐵板起司玉米，通常首份免費。</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Daldongnae+Korean+BBQ+Carrollton" target="_blank" class="map-btn">📍 導航至達東內烤肉</a>
+        </div>
+    </div>
+
+    <!-- DAY 5 -->
+    <div id="day5" class="day-section">
+        <div class="day-header">
+            <div class="day-title">DAY 05 | 3/05 (Thu) 德州超市必買與告別</div>
+            <div class="day-theme">【今日導讀】今天的色調是「夕陽紅與噴射機銀」。行程包含高端超市採買伴手禮、巴西烤肉饗宴以及機場周邊體驗。</div>
+        </div>
+
+        <div class="card" id="d5-01">
+            <div class="card-header">
+                <span class="time">09:30</span>
+                <button class="check-btn" onclick="toggleCard('d5-01')">✔</button>
+            </div>
+            <div class="location-title">🛒 德州超市：Central Market (Lovers Lane)</div>
+            <div class="content-block">
+                <p><strong>地點：</strong> 5750 E Lovers Ln</p>
+                <p><strong>【店家簡介】</strong> H-E-B 集團旗下的高端超市品牌，以豐富的生鮮與特色食品聞名。</p>
+                <div class="recommendation">
+                    <span class="rec-title">【推薦伴手禮 & 2026 預估價】</span>
+                    <ol>
+                        <li><strong>Whataburger Spicy Ketchup (Est. $4.50)：</strong> 德州知名漢堡店推出的瓶裝辣味番茄醬。</li>
+                        <li><strong>H-E-B Texas Shaped Corn Chips (Est. $3.50)：</strong> 德州地圖形狀的玉米片。</li>
+                        <li><strong>Yellowbird Hot Sauce (Est. $8.00)：</strong> 奧斯汀生產的有機辣醬。</li>
+                        <li><strong>Trader Joe's (附近順遊):</strong> 可購買德州限定圖案環保袋 (Est. $1.99)。</li>
+                    </ol>
+                </div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Central+Market+Lovers+Lane" target="_blank" class="map-btn">📍 導航至 Central Market</a>
+        </div>
+
+        <div class="card" id="d5-02">
+            <div class="card-header">
+                <span class="time">11:00</span>
+                <button class="check-btn" onclick="toggleCard('d5-02')">✔</button>
+            </div>
+            <div class="location-title">☕ 早午餐：San Martin Bakery</div>
+            <div class="content-block">
+                <div class="recommendation">
+                    <span class="rec-title">【推薦品項 & 2026 預估價】</span>
+                    <ul>
+                        <li><strong>Pan Dulce (Est. $3.50)：</strong> 瓜地馬拉風格甜麵包。</li>
+                        <li><strong>Café con Leche (Est. $5.50)：</strong> 拿鐵咖啡。</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=San+Martin+Bakery+Dallas" target="_blank" class="map-btn">📍 導航至 San Martin</a>
+        </div>
+
+        <div class="card" id="d5-03">
+            <div class="card-header">
+                <span class="time">12:30</span>
+                <button class="check-btn" onclick="toggleCard('d5-03')">✔</button>
+            </div>
+            <div class="location-title">🥩 巴西烤肉：Brasão Brazilian Steakhouse</div>
+            <div class="location-meta">
+                <span class="meta-tag">🕒 Lunch 11:00 - 14:00</span>
+                <span class="meta-tag">⚠️ 強烈建議透過 OpenTable 提前預約</span>
+            </div>
+            <div class="content-block">
+                <p><strong>地點：</strong> 5725 Colleyville Blvd</p>
+                <p><strong>【店家簡介】</strong> 提供高品質服務與肉品的巴西烤肉餐廳 (Churrascaria)，採吃到飽形式。</p>
+                <div class="recommendation">
+                    <span class="rec-title">【推薦品項 & 2026 預估價】</span>
+                    <ul>
+                        <li><strong>Full Rodizio Experience (Lunch) (Est. $60.00/人)：</strong> 包含所有烤肉品項與沙拉吧。</li>
+                        <li><strong>特色肉品：</strong> Picanha (後腰脊肉)。</li>
+                        <li><strong>配菜：</strong> Roasted Pineapple (烤鳳梨)。</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Brasao+Brazilian+Steakhouse" target="_blank" class="map-btn">📍 導航至 Brasão</a>
+        </div>
+
+        <div class="card" id="d5-04">
+            <div class="card-header">
+                <span class="time">15:00</span>
+                <button class="check-btn" onclick="toggleCard('d5-04')">✔</button>
+            </div>
+            <div class="location-title">✈️ 航空觀景：Founders' Plaza</div>
+            <div class="content-block">
+                <p><strong>地點：</strong> 1700 N Airfield Dr, Grapevine</p>
+                <p><strong>【景點介紹】</strong> 位於 DFW 機場旁的免費觀景廣場，設有廣播系統播放塔台通訊 (ATC)，可近距離觀看飛機起降。</p>
+                <p><strong>【建議行動】</strong> 於車內透過天窗觀賞或至戶外野餐桌休憩。</p>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Founders'+Plaza+DFW" target="_blank" class="map-btn">📍 導航至 Founders' Plaza</a>
+        </div>
+
+        <div class="card" id="d5-05">
+            <div class="card-header">
+                <span class="time">18:30</span>
+                <button class="check-btn" onclick="toggleCard('d5-05')">✔</button>
+            </div>
+            <div class="location-title">🚗 還車：DFW Rental Car Center (Terminal E)</div>
+            <div class="content-block">
+                <p><strong>行動：</strong> 將車輛開回 <strong>Terminal E Parking Garage</strong>。</p>
+                <div class="recommendation">
+                    <span class="rec-title">還車 SOP：</span>
+                    <ol>
+                        <li>進場取票，<strong>務必將票卡留在中控台</strong>。</li>
+                        <li>停妥車輛（盡量選有遮蔽樓層），拍照記錄車位號碼 (Level/Row/Spot) 與儀表板里程/電量。</li>
+                        <li>傳送訊息告知房東車位位置。</li>
+                        <li>確認海報、戰利品、看板等物品皆已取出。</li>
+                    </ol>
+                </div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=DFW+Terminal+E+Parking" target="_blank" class="map-btn">📍 導航至還車點</a>
+        </div>
+
+        <div class="card" id="d5-06">
+            <div class="card-header">
+                <span class="time">20:00</span>
+                <button class="check-btn" onclick="toggleCard('d5-06')">✔</button>
+            </div>
+            <div class="location-title">🐐 最終儀式：Nowitzki (Restaurant)</div>
+            <div class="location-meta">
+                <span class="meta-tag">地點：DFW Airport, Terminal C (Gate C37) - 需搭 Skylink</span>
+            </div>
+            <div class="content-block">
+                <p><strong>【店家簡介】</strong> 與 Dirk Nowitzki 合作開設的主題餐廳酒吧，店內展示相關照片與紀念品。</p>
+                <div class="recommendation">
+                    <span class="rec-title">【推薦品項 & 2026 預估價】</span>
+                    <ul>
+                        <li><strong>Dirk's Burger (Est. $24.00)：</strong> 招牌漢堡。</li>
+                        <li><strong>Local Draft Beer (Est. $12.00)：</strong> 當地生啤酒。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <span class="time">22:50</span>
+            </div>
+            <div class="location-title">🛫 起飛：Return to Taiwan</div>
+            <div class="content-block">
+                <p><strong>行程結束。Goodbye, Dallas. MFFL Forever.</strong></p>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<script>
+    // 使用新的 Storage Key，避免跟上一個版本的進度衝突
+    const STORAGE_KEY = 'dal_trip_progress_desert';
+    let state = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+
+    const progressBar = document.getElementById('progressBar');
+    const cards = document.querySelectorAll('.card');
+    
+    function init() {
+        cards.forEach(card => {
+            const btn = card.querySelector('.check-btn');
+            if(!btn) return;
+            if (state[card.id]) {
+                card.classList.add('completed');
+                btn.innerText = '✔';
+            } else {
+                btn.innerText = ''; 
+            }
+        });
+        updateProgress();
+    }
+
+    function toggleCard(id) {
+        const card = document.getElementById(id);
+        const isCompleted = card.classList.toggle('completed');
+        const btn = card.querySelector('.check-btn');
+
+        if (isCompleted) {
+            state[id] = true;
+            btn.innerText = '✔';
+        } else {
+            delete state[id];
+            btn.innerText = '';
+        }
+
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        updateProgress();
+    }
+
+    function updateProgress() {
+        const checkBtns = document.querySelectorAll('.check-btn');
+        if(checkBtns.length === 0) return;
+        
+        let completed = 0;
+        checkBtns.forEach(btn => {
+            if(btn.closest('.card').classList.contains('completed')) {
+                completed++;
+            }
+        });
+        
+        const percent = (completed / checkBtns.length) * 100;
+        progressBar.style.width = percent + '%';
+    }
+
+    function switchDay(dayNum) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.day-section').forEach(sec => sec.classList.remove('active'));
+
+        document.querySelectorAll('.tab-btn')[dayNum-1].classList.add('active');
+        document.getElementById('day' + dayNum).classList.add('active');
+
+        document.body.className = ''; 
+        document.body.classList.add('day' + dayNum + '-theme');
+        
+        // 滑動回頂部
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    init();
+</script>
+
+</body>
+</html>
